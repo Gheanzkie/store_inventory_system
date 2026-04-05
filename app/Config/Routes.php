@@ -30,5 +30,11 @@ $routes->delete('product/delete/(:num)', 'Product::delete/$1');
 $routes->post('product/fetchRecords', 'Product::fetchRecords');
 
 
+$routes->post('sales/save', 'Sales::save');
+$routes->post('sales/update', 'Sales::update');
+$routes->post('sales/delete', 'Sales::delete');
+
+
+
 // Logs routes for admin
 $routes->get('/log', 'Logs::log');

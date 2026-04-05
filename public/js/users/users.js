@@ -17,12 +17,12 @@ $('#addUserForm').on('submit', function (e) {
             if (response.status === 'success') {
                 $('#AddNewModal').modal('hide');
                 $('#addUserForm')[0].reset();
-                showToast('success', 'User added successfully!');
+                showToast('success', 'Staff added successfully!');
                 setTimeout(() => {
                     location.reload();
                 }, 1000); 
             } else {
-                showToast('error', response.message || 'Failed to add user.');
+                showToast('error', response.message || 'Failed to add Staff.');
             }
         },
         error: function () {
@@ -48,11 +48,11 @@ $(document).on('click', '.edit-btn', function () {
             $('#editUserModal #phone').val(response.data.phone);
             $('#editUserModal').modal('show');
         } else {
-            alert('Error fetching user data');
+            alert('Error fetching staff data');
         }
     },
     error: function () {
-        alert('Error fetching user data');
+        alert('Error fetching staff data');
     }
 });
 });
@@ -70,7 +70,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     $('#editUserModal').modal('hide');
-                    showToast('success', 'User Updated successfully!');
+                    showToast('success', 'Staff Updated successfully!');
                     setTimeout(() => location.reload(), 1000);
                 } else {
                     alert('Error updating: ' + (response.message || 'Unknown error'));
@@ -89,7 +89,7 @@ $(document).on('click', '.deleteUserBtn', function () {
     const csrfName = $('meta[name="csrf-name"]').attr('content');
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    if (confirm('Are you sure you want to delete this user?')) {
+    if (confirm('Are you sure you want to delete this staff?')) {
         $.ajax({
             url: baseUrl + 'users/delete/' + userId,
             method: 'POST', 
@@ -99,7 +99,7 @@ $(document).on('click', '.deleteUserBtn', function () {
             },
             success: function (response) {
                 if (response.success) {
-                    showToast('success', 'Users deleted successfully.');
+                    showToast('success', 'Staff deleted successfully.');
                     setTimeout(() => location.reload(), 1000);
                 } else {
                     alert(response.message || 'Failed to delete.');
@@ -130,7 +130,7 @@ $(document).ready(function () {
         },
         columns: [
         { data: 'row_number' },
-        { data: 'id', visible: false },
+        { data: 'id'},
         { data: 'name' },
         { data: 'username' },
         { data: 'role' },

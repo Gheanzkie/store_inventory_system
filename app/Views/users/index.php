@@ -36,7 +36,7 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th style="display:none;">id</th>
+                    <th>id</th>
                     <th>Name</th>
                     <th>Username</th>
                     <th>Role</th>
@@ -86,7 +86,7 @@
                   <div class="form-group">
                     <label>Role</label>
                     <select class="form-control" name="role">
-                      <option value="Admin">Admin</option>
+                      <option value="admin">Admin</option>
                       <option value="Staff">Staff</option>
                       <option value="Part-Time">Part-Time</option>
                     </select>
@@ -120,7 +120,6 @@
   </div>
  
  
-  <!--Edit user-->
   <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -156,7 +155,7 @@
                   <div class="form-group">
                     <label>Role</label>
                     <select class="form-control" name="role" id="role">
-                      <option value="Admin">Admin</option>
+                      <option value="admin">Admin</option>
                       <option value="Staff">Staff</option>
                       <option value="Part-Time">Part-Time</option>
                     </select>
