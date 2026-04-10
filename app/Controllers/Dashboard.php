@@ -2,32 +2,40 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
-use App\Models\ProductModel;
 use App\Models\SalesModel;
+use App\Models\ProductModel;
+use App\Models\UserModel;
 
 
 class Dashboard extends BaseController
 {
     public function index()
     {
-        if (!session()->get('user_id')) {
-            return redirect()->to('/login');
-        }
-
-
-        $userModel = new UserModel();
+        $salesModel   = new SalesModel();
         $productModel = new ProductModel();
-        $salesModel = new SalesModel();
+        $userModel = new UserModel();
 
-        $data = [
-        'totalStaff' => $userModel->getTotalStaff(),
-        'totalProduct' => $productModel->getTotalProduct(),
-        'totalSales' => $salesModel->getTotalSales(),
-        'salesList' => $salesModel->orderBy('date','DESC')->findAll(),
-        'pageName' => 'Dashboard'
-];
+        // total sales
+        $totalSales = $salesModel
+            ->selectSum('total')
+            ->first()['total'] ?? 0;
 
-        return view('dashboard', $data);
+        // total products
+        $totalProducts = $productModel->countAll();
+        $totalStaff = $userModel->countAll();
+        
+
+        // recent sales
+        $recentSales = $salesModel
+            ->orderBy('date', 'DESC')
+            ->limit(5)
+            ->findAll();
+
+        return view('dashboard', [
+            'totalSales'    => $totalSales,
+            'totalProducts' => $totalProducts,
+            'recentSales'   => $recentSales,
+            'totalStaff'   => $totalStaff,
+        ]);
     }
 }

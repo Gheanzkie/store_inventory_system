@@ -1,25 +1,23 @@
 <?php
-
 namespace App\Models;
 
 use CodeIgniter\Model;
 
 class SalesItemModel extends Model
 {
-    protected $table = 'sales_item';
-    protected $primaryKey = 'id';
+    protected $table = 'sales_items';
+    protected $allowedFields = ['product_id', 'quantity', 'price'];
 
-    protected $allowedFields = ['sale_id', 'product_id', 'quantity', 'subtotal'];
-
-    public function getItemsBySale($sale_id)
+    public function getSalesItems()
     {
-        return $this->where('sale_id', $sale_id)->findAll();
+        $builder = $this->db->table($this->table . ' as si');
+        $builder->select('si.id, p.name, si.price, si.quantity');
+        $builder->join('product p', 'p.id = si.product_id');
+        return $builder->get()->getResultArray();
     }
 
-    public function getTotalQty($sale_id)
+    public function purgeSalesItems()
     {
-        return $this->where('sale_id', $sale_id)
-                    ->selectSum('quantity')
-                    ->first()['quantity'] ?? 0;
+        return $this->db->table($this->table)->truncate();
     }
 }

@@ -12,16 +12,14 @@ $routes->post('/auth', 'Auth::auth');
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/logout', 'Auth::logout');
 
-// admin accounts
+// Admin users
 $routes->get('/users', 'Users::index');
 $routes->post('users/save', 'Users::save');
 $routes->get('users/edit/(:segment)', 'Users::edit/$1');
 $routes->post('users/update', 'Users::update');
 $routes->delete('users/delete/(:num)', 'Users::delete/$1');
 $routes->post('users/fetchRecords', 'Users::fetchRecords');
-
-
-//product 
+// Products
 $routes->get('/product', 'Product::index');
 $routes->post('product/save', 'Product::save');
 $routes->get('product/edit/(:segment)', 'Product::edit/$1');
@@ -29,12 +27,7 @@ $routes->post('product/update', 'Product::update');
 $routes->delete('product/delete/(:num)', 'Product::delete/$1'); 
 $routes->post('product/fetchRecords', 'Product::fetchRecords');
 
+$routes->get('sales', 'Sales::index'); // /sales → SalesController::index
 
-$routes->post('sales/save', 'Sales::save');
-$routes->post('sales/update', 'Sales::update');
-$routes->post('sales/delete', 'Sales::delete');
-
-
-
-// Logs routes for admin
+// Logs
 $routes->get('/log', 'Logs::log');
