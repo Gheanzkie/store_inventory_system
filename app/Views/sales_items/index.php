@@ -2,103 +2,135 @@
 <?= $this->section('content') ?>
 
 <div class="content-wrapper">
-    <section class="content">
-        <div class="container-fluid">
+<section class="content">
+<div class="container-fluid">
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Sales Items</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <select id="productSelect" class="form-control">
-                                <?php foreach($products as $p): ?>
-                                    <option value="<?= $p['id'] ?>"><?= $p['name'] ?> - <?= number_format($p['price'],2) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <input type="number" id="qty" class="form-control" value="1" min="1">
-                        </div>
-                        <div class="col-md-2">
-                            <button id="addItemBtn" class="btn btn-primary">Add Item</button>
-                        </div>
-                        <div class="col-md-2">
-                            <button id="checkoutBtn" class="btn btn-success">Checkout</button>
-                        </div>
-                    </div>
+<div class="card">
 
-                    <table id="salesTable" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Total</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if(!empty($salesItems)): ?>
-                                <?php foreach($salesItems as $item): ?>
-                                    <tr data-id="<?= $item['id'] ?>">
-                                        <td><?= $item['id'] ?></td>
-                                        <td><?= $item['name'] ?></td>
-                                        <td><?= number_format($item['price'],2) ?></td>
-                                        <td><?= $item['quantity'] ?></td>
-                                        <td><?= number_format($item['price'] * $item['quantity'],2) ?></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger deleteItemBtn">Delete</button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-    </section>
+<!-- HEADER -->
+<div class="card-header">
+<h3 class="card-title">Sales Transactions</h3>
 </div>
 
-<script>
-const baseUrl = "<?= base_url('/') ?>";
+<div class="card-body">
 
-$('#addItemBtn').click(function() {
-    $.post(baseUrl + 'sales-item/save', {
-        product_id: $('#productSelect').val(),
-        quantity: $('#qty').val()
-    }, function(res){
-        if(res.status === 'success') location.reload();
-        else alert('Failed to add item');
-    }, 'json');
-});
+<?php if(session()->getFlashdata('msg')): ?>
+<div class="alert alert-info">
+<?= session()->getFlashdata('msg') ?>
+</div>
+<?php endif; ?>
 
-$('.deleteItemBtn').click(function() {
-    const id = $(this).closest('tr').data('id');
-    $.post(baseUrl + 'sales-item/delete', {id}, function(res){
-        if(res.status === 'success') location.reload();
-        else alert('Failed to delete item');
-    }, 'json');
-});
+<!-- SELECT TRANSACTION -->
+<form method="get" action="<?= base_url('sales_items') ?>">
+<select name="sale_id" class="form-control mb-3" onchange="this.form.submit()">
 
-$('#checkoutBtn').click(function() {
-    $.post(baseUrl + 'sales/checkout', {}, function(res){
-        alert(res.message);
-        if(res.status === 'success') location.reload();
-    }, 'json');
-});
+<option value="">Select Transaction Record</option>
 
-$(document).ready(function() {
-    $('#salesTable').DataTable({
-        responsive: true,
-        autoWidth: false,
-    });
-});
-</script>
+<?php foreach($salesList as $s): ?>
+<option value="<?= $s['id'] ?>"
+<?= ($activeSale == $s['id']) ? 'selected' : '' ?>>
+
+Transaction #<?= $s['id'] ?> - 
+<?= date('M d, Y h:i A', strtotime($s['date'])) ?>
+
+<?php if(!empty($s['created_at'])): ?>
+(<?= date('h:i A', strtotime($s['created_at'])) ?>)
+<?php endif; ?>
+
+</option>
+<?php endforeach; ?>
+
+</select>
+</form>
+
+<!-- ADD ITEM (CART INPUT) -->
+<form method="post" action="<?= base_url('sales_items/save') ?>">
+<?= csrf_field() ?>
+
+<input type="hidden" name="sale_id" value="<?= $activeSale ?>">
+
+<div class="row mb-3">
+
+<div class="col-md-6">
+<select name="product_id" class="form-control">
+<?php foreach($products as $p): ?>
+<option value="<?= $p['id'] ?>">
+<?= $p['name'] ?> - ₱<?= number_format($p['price'],2) ?>
+</option>
+<?php endforeach; ?>
+</select>
+</div>
+
+<div class="col-md-2">
+<input type="number" name="quantity" class="form-control" value="1" min="1">
+</div>
+
+<div class="col-md-2">
+<button class="btn btn-primary w-100">
+Add Item
+</button>
+</div>
+
+</div>
+</form>
+
+<!-- FINALIZE TRANSACTION -->
+<form method="post" action="<?= base_url('sales/checkout') ?>">
+<?= csrf_field() ?>
+<input type="hidden" name="sale_id" value="<?= $activeSale ?>">
+
+<button class="btn btn-success mb-3">
+Complete Transaction
+</button>
+</form>
+
+<!-- ITEMS TABLE -->
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Product</th>
+<th>Quantity</th>
+<th>Total</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+<?php if(!empty($salesItems)): ?>
+<?php foreach($salesItems as $item): ?>
+<tr>
+
+<td><?= $item['id'] ?></td>
+<td><?= $item['name'] ?></td>
+<td><?= $item['quantity'] ?></td>
+<td>₱<?= number_format($item['subtotal'],2) ?></td>
+
+<td>
+<form method="post" action="<?= base_url('sales_items/delete') ?>">
+<?= csrf_field() ?>
+<input type="hidden" name="id" value="<?= $item['id'] ?>">
+<button class="btn btn-danger btn-sm">
+Remove
+</button>
+</form>
+</td>
+
+</tr>
+<?php endforeach; ?>
+<?php endif; ?>
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+</div>
+</section>
+</div>
 
 <?= $this->endSection() ?>

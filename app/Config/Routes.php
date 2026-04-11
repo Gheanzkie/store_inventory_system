@@ -27,7 +27,20 @@ $routes->post('product/update', 'Product::update');
 $routes->delete('product/delete/(:num)', 'Product::delete/$1'); 
 $routes->post('product/fetchRecords', 'Product::fetchRecords');
 
-$routes->get('sales', 'Sales::index'); // /sales → SalesController::index
+
+$routes->group('sales_items', function($routes) {
+    $routes->get('/', 'Sales_Items::index');
+    $routes->post('save', 'Sales_Items::save');
+    $routes->post('delete', 'Sales_Items::delete');
+});
+
+$routes->group('sales', function($routes) {
+    $routes->get('/', 'Sales::index');
+    $routes->post('create', 'Sales::create');
+    $routes->post('checkout', 'Sales::checkout');
+});
+
+$routes->post('sales/delete', 'Sales::delete');
 
 // Logs
 $routes->get('/log', 'Logs::log');

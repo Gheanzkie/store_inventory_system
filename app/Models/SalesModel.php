@@ -8,5 +8,5 @@ class SalesModel extends Model
 {
     protected $table = 'sales';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['user_id','total','date'];
+    protected $allowedFields = ['user_id','total','date','status'];
 }
