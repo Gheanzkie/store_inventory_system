@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2026 at 05:36 PM
+-- Generation Time: Apr 11, 2026 at 11:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,20 +72,19 @@ INSERT INTO `login_attempts` (`id`, `email`, `ip_address`, `attempt_time`, `user
 --
 
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `cate` varchar(50) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `price` int(50) DEFAULT NULL,
-  `stock` int(11) DEFAULT 0
+  `id` int(11) UNSIGNED NOT NULL,
+  `category_id` int(11) UNSIGNED DEFAULT NULL,
+  `name` varchar(150) NOT NULL,
+  `price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `stock` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `category_id`, `cate`, `name`, `price`, `stock`) VALUES
-(64, 1, '', 'Coke', 20, 20);
+INSERT INTO `product` (`id`, `category_id`, `name`, `price`, `stock`) VALUES
+(1, 1, 'Coke', 20.00, 8);
 
 -- --------------------------------------------------------
 
@@ -94,10 +93,10 @@ INSERT INTO `product` (`id`, `category_id`, `cate`, `name`, `price`, `stock`) VA
 --
 
 CREATE TABLE `sales` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `total` decimal(10,2) DEFAULT NULL,
-  `date` datetime DEFAULT current_timestamp()
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `total` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -105,7 +104,7 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `user_id`, `total`, `date`) VALUES
-(6, 13, 6034.00, '2026-04-05 13:29:51');
+(2, 12, 40.00, '2026-04-08 15:31:13');
 
 -- --------------------------------------------------------
 
@@ -114,12 +113,19 @@ INSERT INTO `sales` (`id`, `user_id`, `total`, `date`) VALUES
 --
 
 CREATE TABLE `sales_items` (
-  `id` int(11) NOT NULL,
-  `sale_id` int(11) DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `subtotal` decimal(10,2) DEFAULT NULL
+  `id` int(11) UNSIGNED NOT NULL,
+  `sale_id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `subtotal` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sales_items`
+--
+
+INSERT INTO `sales_items` (`id`, `sale_id`, `product_id`, `quantity`, `subtotal`) VALUES
+(4, 2, 1, 2, 40.00);
 
 -- --------------------------------------------------------
 
@@ -276,7 +282,15 @@ INSERT INTO `tbl_logs` (`LOGID`, `USERID`, `ACTION`, `DATELOG`, `TIMELOG`, `user
 (160, '12', 'New User has been apdated: Ghean', '2026-04-05', '21:31:11', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
 (161, '12', 'Sale deleted ID: 3', '2026-04-05', '22:03:37', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'DELETE'),
 (162, '12', 'Sale deleted ID: 4', '2026-04-05', '22:03:40', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'DELETE'),
-(163, '12', 'Sale deleted ID: 5', '2026-04-05', '22:03:44', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'DELETE');
+(163, '12', 'Sale deleted ID: 5', '2026-04-05', '22:03:44', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'DELETE'),
+(164, '12', 'Login: Arnelle', '2026-04-08', '22:16:44', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(165, '12', 'Sale deleted ID: 6', '2026-04-08', '22:17:15', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'DELETE'),
+(166, '12', 'New Product has been added: Coke', '2026-04-08', '23:02:58', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'ADD'),
+(167, '12', 'New Sale added: ₱100', '2026-04-08', '23:12:28', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'ADD'),
+(168, '12', 'New Sale created ID: 3', '2026-04-09', '00:36:58', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'ADD'),
+(169, '12', 'Sale deleted ID: 3', '2026-04-09', '00:37:09', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'DELETE'),
+(170, '12', 'Login: Arnelle', '2026-04-09', '13:21:15', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(171, '12', 'Login: Arnelle', '2026-04-09', '13:21:17', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN');
 
 -- --------------------------------------------------------
 
@@ -325,23 +339,21 @@ ALTER TABLE `login_attempts`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sales`
 --
 ALTER TABLE `sales`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `sales_ibfk_1` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sales_items`
 --
 ALTER TABLE `sales_items`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sale_id` (`sale_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `fk_sale` (`sale_id`),
+  ADD KEY `fk_product` (`product_id`);
 
 --
 -- Indexes for table `staffs`
@@ -383,19 +395,19 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sales_items`
 --
 ALTER TABLE `sales_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `staffs`
@@ -407,7 +419,7 @@ ALTER TABLE `staffs`
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `LOGID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `LOGID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -420,23 +432,11 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `product`
---
-ALTER TABLE `product`
-  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `sales`
---
-ALTER TABLE `sales`
-  ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
 -- Constraints for table `sales_items`
 --
 ALTER TABLE `sales_items`
-  ADD CONSTRAINT `sales_items_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`),
-  ADD CONSTRAINT `sales_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `fk_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_sale` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
