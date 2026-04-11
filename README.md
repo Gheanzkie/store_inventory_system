@@ -77,6 +77,6 @@ This project is open-source and available under the MIT License.
 
 Login Credentials 
 
-User = glennazuelo1@gmail.com
+User = ghean123 
 
-Pass = 1232
+Pass = 123
