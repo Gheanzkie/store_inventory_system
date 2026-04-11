@@ -33,50 +33,64 @@ class Sales_Items extends BaseController
         return view('sales_items/index', $data);
     }
 
-    // ADD ITEM
-    public function save()
-    {
-        $sale_id   = $this->request->getPost('sale_id');
-        $productId = $this->request->getPost('product_id');
-        $quantity  = (int) $this->request->getPost('quantity');
+            public function save()
+            {
+                $sale_id   = $this->request->getPost('sale_id');
+                $productId = $this->request->getPost('product_id');
+                $quantity  = (int) $this->request->getPost('quantity');
 
-        if (empty($sale_id)) {
-            return redirect()->back()->with('msg', 'Please select a sale first');
-        }
+                if (empty($sale_id)) {
+                    return redirect()->back()->with('msg', 'Please select a sale first');
+                }
 
-        $product = $this->productModel->find($productId);
+                $product = $this->productModel->find($productId);
 
-        if (!$product) {
-            return redirect()->back()->with('msg', 'Product not found');
-        }
+                if (!$product) {
+                    return redirect()->back()->with('msg', 'Product not found');
+                }
 
-        $existing = $this->salesItemModel
-            ->where('sale_id', $sale_id)
-            ->where('product_id', $productId)
-            ->first();
+                // ❗ CHECK STOCK
+                if ($product['stock'] < $quantity) {
+                    return redirect()->back()->with('msg', 'Not enough stock');
+                }
 
-        if ($existing) {
+                $existing = $this->salesItemModel
+                    ->where('sale_id', $sale_id)
+                    ->where('product_id', $productId)
+                    ->first();
 
-            $newQty = $existing['quantity'] + $quantity;
+                if ($existing) {
 
-            $this->salesItemModel->update($existing['id'], [
-                'quantity' => $newQty,
-                'subtotal' => $product['price'] * $newQty
-            ]);
+                    $newQty = $existing['quantity'] + $quantity;
 
-        } else {
+                    // ❗ check total stock
+                    if ($product['stock'] < $quantity) {
+                        return redirect()->back()->with('msg', 'Not enough stock');
+                    }
 
-            $this->salesItemModel->insert([
-                'sale_id'    => $sale_id,
-                'product_id' => $productId,
-                'quantity'   => $quantity,
-                'subtotal'   => $product['price'] * $quantity,
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
-        }
+                    $this->salesItemModel->update($existing['id'], [
+                        'quantity' => $newQty,
+                        'subtotal' => $product['price'] * $newQty
+                    ]);
 
-        return redirect()->back()->with('msg', 'Item added');
-    }
+                } else {
+
+                    $this->salesItemModel->insert([
+                        'sale_id'    => $sale_id,
+                        'product_id' => $productId,
+                        'quantity'   => $quantity,
+                        'subtotal'   => $product['price'] * $quantity,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+
+                // ✅ DEDUCT STOCK
+                $this->productModel->update($productId, [
+                    'stock' => $product['stock'] - $quantity
+                ]);
+
+                return redirect()->back()->with('msg', 'Item added and stock updated');
+            }
 
     // DELETE ITEM
     public function delete()
@@ -90,24 +104,5 @@ class Sales_Items extends BaseController
         $this->salesItemModel->delete($id);
 
         return redirect()->back()->with('msg', 'Item removed');
-    }
-
-    // ================= AJAX: GET ITEMS PER SALE =================
-    public function getSaleItems($sale_id)
-    {
-        if (!$sale_id) {
-            return $this->response->setJSON([]);
-        }
-
-        $db = \Config\Database::connect();
-
-        $items = $db->table('sales_items si')
-            ->select('p.name, si.quantity, si.subtotal')
-            ->join('product p', 'p.id = si.product_id')
-            ->where('si.sale_id', $sale_id)
-            ->get()
-            ->getResultArray();
-
-        return $this->response->setJSON($items);
     }
 }

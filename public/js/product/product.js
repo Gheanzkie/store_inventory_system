@@ -129,7 +129,17 @@ $(document).ready(function () {
         columns: [
         { data: 'row_number' },
         { data: 'id', visible: false },
-        { data: 'category_id' },
+        {
+    data: 'category_id',
+    render: function (data) {
+        if (data == 1) return 'Beverages';
+        if (data == 2) return 'Snacks';
+        if (data == 3) return 'Canned Goods';
+        if (data == 4) return 'Personal Care';
+        if (data == 5) return 'Household Items';
+        return 'Unknown';
+     }
+    },
         { data: 'name' },
         { data: 'price' },
         { data: 'stock' },
