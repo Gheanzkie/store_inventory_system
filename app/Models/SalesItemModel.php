@@ -18,7 +18,7 @@ class SalesItemModel extends Model
     public function getSalesItems($sale_id = 0)
     {
         return $this->db->table('sales_items si')
-            ->select('si.id, p.name, si.quantity, si.subtotal')
+            ->select('si.id, p.name, p.price, si.quantity, si.subtotal')
             ->join('product p', 'p.id = si.product_id')
             ->where('si.sale_id', $sale_id)
             ->get()
@@ -28,5 +28,16 @@ class SalesItemModel extends Model
     public function clearCart($sale_id = 0)
     {
         return $this->where('sale_id', $sale_id)->delete();
+    }
+
+    public function getTotal($sale_id = 0)
+    {
+        $result = $this->db->table('sales_items')
+            ->selectSum('subtotal')
+            ->where('sale_id', $sale_id)
+            ->get()
+            ->getRow();
+            
+        return $result->subtotal ?? 0;
     }
 }
