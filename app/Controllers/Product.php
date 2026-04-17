@@ -8,23 +8,30 @@ use App\Models\ProductModel;
 
 class Product extends Controller
 {
-    public function index(){
-        $model = new ProductModel();
+    protected $productModel;
+    protected $logModel;
+
+    public function __construct()
+    {
+        $this->productModel = new ProductModel();
+        $this->logModel = new LogModel();
+    }
+
+    public function index()
+    {
         $data = [
-            'product' => $model->findAll(),
+            'product' => $this->productModel->findAll(),
             'pageName' => 'Product'  
         ];
         return view('product/index', $data);
     }
  
-    public function save(){
+    public function save()
+    {
         $category_id = $this->request->getPost('category_id');
         $name = $this->request->getPost('name');
         $price = $this->request->getPost('price');
         $stock = $this->request->getPost('stock');
-
-        $userModel = new ProductModel();
-        $logModel = new LogModel();
 
         $data = [
             'category_id' => $category_id,
@@ -33,17 +40,17 @@ class Product extends Controller
             'stock'       => $stock
         ];
 
-        if ($userModel->insert($data)) {
-            $logModel->addLog('New Product has been added: ' . $name, 'ADD');
+        if ($this->productModel->insert($data)) {
+            // ✅ LOG ACTIVITY
+            $this->logModel->addLog('Added product: ' . $name, 'ADD');
             return $this->response->setJSON(['status' => 'success']);
         } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to save Product']);
         }
     }
 
-    public function update(){
-        $model = new ProductModel();
-        $logModel = new LogModel();
+    public function update()
+    {
         $userId = $this->request->getPost('id');
         $category_id = $this->request->getPost('category_id');
         $name = $this->request->getPost('name');
@@ -57,10 +64,11 @@ class Product extends Controller
             'stock'       => $stock
         ];
 
-        $updated = $model->update($userId, $userData);
+        $updated = $this->productModel->update($userId, $userData);
 
         if ($updated) {
-            $logModel->addLog('Product has been updated: ' . $name, 'UPDATED');
+            // ✅ LOG ACTIVITY
+            $this->logModel->addLog('Updated product: ' . $name, 'UPDATE');
             return $this->response->setJSON([
                 'success' => true,
                 'message' => 'Product updated successfully.'
@@ -73,9 +81,9 @@ class Product extends Controller
         }
     }
 
-    public function edit($id){
-        $model = new ProductModel();
-        $user = $model->find($id);
+    public function edit($id)
+    {
+        $user = $this->productModel->find($id);
 
         if ($user) {
             return $this->response->setJSON(['data' => $user]);
@@ -84,18 +92,18 @@ class Product extends Controller
         }
     }
 
-    public function delete($id){
-        $model = new ProductModel();
-        $logModel = new LogModel();
-        $user = $model->find($id);
+    public function delete($id)
+    {
+        $user = $this->productModel->find($id);
         if (!$user) {
             return $this->response->setJSON(['success' => false, 'message' => 'Product not found.']);
         }
 
-        $deleted = $model->delete($id);
+        $deleted = $this->productModel->delete($id);
 
         if ($deleted) {
-            $logModel->addLog('Deleted product: ' . $user['name'], 'DELETED');
+            // ✅ LOG ACTIVITY
+            $this->logModel->addLog('Deleted product: ' . $user['name'], 'DELETE');
             return $this->response->setJSON(['success' => true, 'message' => 'Product deleted successfully.']);
         } else {
             return $this->response->setJSON(['success' => false, 'message' => 'Failed to delete Product.']);
@@ -105,14 +113,12 @@ class Product extends Controller
     public function fetchRecords()
     {
         $request = service('request');
-        $model = new ProductModel();
-
         $start = $request->getPost('start') ?? 0;
         $length = $request->getPost('length') ?? 10;
         $searchValue = $request->getPost('search')['value'] ?? '';
 
-        $totalRecords = $model->countAll();
-        $result = $model->getRecords($start, $length, $searchValue);
+        $totalRecords = $this->productModel->countAll();
+        $result = $this->getRecords($start, $length, $searchValue);
 
         $data = [];
         $counter = $start + 1;
@@ -127,5 +133,26 @@ class Product extends Controller
             'recordsFiltered' => $result['filtered'],
             'data' => $data,
         ]);
+    }
+
+    private function getRecords($start, $length, $searchValue)
+    {
+        $builder = $this->productModel->builder();
+        $builder->select('product.*, categories.category_name');
+        $builder->join('categories', 'categories.id = product.category_id', 'left');
+        
+        if (!empty($searchValue)) {
+            $builder->groupStart()
+                ->like('product.name', $searchValue)
+                ->orLike('product.price', $searchValue)
+                ->orLike('categories.category_name', $searchValue)
+                ->groupEnd();
+        }
+        
+        $filtered = $builder->countAllResults(false);
+        $builder->orderBy('product.id', 'DESC');
+        $data = $builder->get($length, $start)->getResultArray();
+        
+        return ['data' => $data, 'filtered' => $filtered];
     }
 }

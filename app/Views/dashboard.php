@@ -24,9 +24,8 @@
     <section class="content">
         <div class="container-fluid">
             
-            
+            <!-- Row 1 -->
             <div class="row">
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -38,8 +37,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -51,8 +48,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -64,8 +59,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-warning" style="border-radius: 8px;">
@@ -79,9 +72,8 @@
                 </div>
             </div>
 
-            
+            <!-- Row 2 -->
             <div class="row">
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -93,8 +85,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-danger" style="border-radius: 8px;">
@@ -106,8 +96,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-dark" style="border-radius: 8px;">
@@ -119,8 +107,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -134,9 +120,8 @@
                 </div>
             </div>
 
-            
+            <!-- Row 3 -->
             <div class="row">
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -148,8 +133,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -161,8 +144,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -174,8 +155,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -189,9 +168,8 @@
                 </div>
             </div>
 
-            
+            <!-- Chart & Recent Activity -->
             <div class="row">
-                
                 <div class="col-lg-8">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -207,8 +185,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-4">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -247,9 +223,7 @@
                                                         <span class="badge badge-danger">Cancelled</span>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td class="text-muted small">
-                                                    <?= date('h:i A', strtotime($trans['date'])) ?>
-                                                </td>
+                                                <td class="text-muted small"><?= date('h:i A', strtotime($trans['date'])) ?></td>
                                             </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -268,9 +242,8 @@
                 </div>
             </div>
 
-            
+            <!-- Top Products & Stock Alert -->
             <div class="row">
-                
                 <div class="col-lg-6">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -314,8 +287,6 @@
                         </div>
                     </div>
                 </div>
-
-                
                 <div class="col-lg-6">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -375,19 +346,35 @@
     </section>
 </div>
 
-
 <script src="<?= base_url('assets/plugins/chart.js/Chart.min.js') ?>"></script>
 <script>
-$(document).ready(function() {
-    var ctx = document.getElementById('salesChart').getContext('2d');
+// Wait for everything to load
+window.addEventListener('DOMContentLoaded', function() {
+    // Wait for Chart.js to be available
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js not loaded');
+        return;
+    }
     
-    var salesChart = new Chart(ctx, {
+    var ctx = document.getElementById('salesChart');
+    if (!ctx) {
+        console.error('Canvas element not found');
+        return;
+    }
+    
+    var labels = <?= json_encode($chartLabels ?? []) ?>;
+    var data = <?= json_encode($chartData ?? []) ?>;
+    
+    console.log('Chart Labels:', labels);
+    console.log('Chart Data:', data);
+    
+    new Chart(ctx.getContext('2d'), {
         type: 'line',
         data: {
-            labels: <?= json_encode($chartLabels ?? []) ?>,
+            labels: labels,
             datasets: [{
                 label: 'Sales',
-                data: <?= json_encode($chartData ?? []) ?>,
+                data: data,
                 borderColor: '#6b7280',
                 backgroundColor: 'rgba(107, 114, 128, 0.05)',
                 borderWidth: 2,
@@ -424,9 +411,7 @@ $(document).ready(function() {
                         }
                     }
                 },
-                x: {
-                    grid: { display: false }
-                }
+                x: { grid: { display: false } }
             }
         }
     });
@@ -434,43 +419,15 @@ $(document).ready(function() {
 </script>
 
 <style>
-.info-box {
-    border-radius: 10px;
-    transition: all 0.2s ease;
-    min-height: 90px;
-}
-.info-box:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
-}
-.info-box-icon {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-}
-.info-box-content {
-    padding: 8px 10px;
-}
-.card {
-    border-radius: 10px;
-}
-.table td, .table th {
-    vertical-align: middle;
-    border-top: none;
-}
-.table tbody tr {
-    border-bottom: 1px solid #f3f4f6;
-}
-.table tbody tr:last-child {
-    border-bottom: none;
-}
-.badge {
-    font-weight: 400;
-    padding: 4px 8px;
-}
+.info-box { border-radius: 10px; transition: all 0.2s ease; min-height: 90px; }
+.info-box:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; }
+.info-box-icon { width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+.info-box-content { padding: 8px 10px; }
+.card { border-radius: 10px; }
+.table td, .table th { vertical-align: middle; border-top: none; }
+.table tbody tr { border-bottom: 1px solid #f3f4f6; }
+.table tbody tr:last-child { border-bottom: none; }
+.badge { font-weight: 400; padding: 4px 8px; }
 </style>
 
 <?= $this->endSection() ?>

@@ -28,25 +28,23 @@ $routes->post('product/update', 'Product::update');
 $routes->delete('product/delete/(:num)', 'Product::delete/$1'); 
 $routes->post('product/fetchRecords', 'Product::fetchRecords');
 
-// =============================================
-// SALES ITEMS - POS at Cart
-// =============================================
+
+
+
+// Sales Items Routes
 $routes->get('sales_items', 'Sales_Items::index');
-$routes->get('sales_items/create', 'Sales_Items::create');
 $routes->post('sales_items/save', 'Sales_Items::save');
 $routes->post('sales_items/update', 'Sales_Items::update');
 $routes->post('sales_items/delete', 'Sales_Items::delete');
 $routes->post('sales_items/checkout', 'Sales_Items::checkout');
-$routes->get('sales_items/receipt/(:num)', 'Sales_Items::receipt/$1');
+$routes->get('sales_items/new', 'Sales_Items::newTransaction');
 $routes->get('sales_items/receipt_page/(:num)', 'Sales_Items::receipt_page/$1');
+$routes->get('sales_items/receipt/(:num)', 'Sales_Items::receipt/$1');
 
-// =============================================
-// SALES - History at Records
-// =============================================
+// Sales Routes
 $routes->get('sales', 'Sales::index');
 $routes->post('sales/delete', 'Sales::delete');
 $routes->get('sales/view/(:num)', 'Sales::view/$1');
-
 
 // Logs
 $routes->get('/log', 'Logs::log');

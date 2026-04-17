@@ -1,224 +1,139 @@
-// Toast Notification Function
+// =============================================
+// TOAST NOTIFICATION
+// =============================================
 function showToast(type, message) {
-    if (type === 'success') {
-        toastr.success(message, 'Success', {
-            closeButton: true,
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            timeOut: 3000
+    if (typeof toastr !== 'undefined') {
+        toastr[type](message, type === 'success' ? 'Success' : 'Error', {
+            closeButton: true, progressBar: true, positionClass: 'toast-top-right', timeOut: 3000
         });
     } else {
-        toastr.error(message, 'Error', {
-            closeButton: true,
-            progressBar: true,
-            positionClass: 'toast-top-right',
-            timeOut: 5000
-        });
+        showAlert(type, message);
     }
 }
 
-// Alert Container (fallback if toastr not available)
 function showAlert(type, message) {
     var alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
     var icon = type === 'success' ? 'check-circle' : 'exclamation-circle';
-    
-    var alertHtml = `
+    $('#alertContainer').html(`
         <div class="alert ${alertClass} alert-dismissible fade show shadow-sm border-0" role="alert">
-            <i class="fas fa-${icon} mr-2"></i>
-            ${message}
+            <i class="fas fa-${icon} mr-2"></i>${message}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
-    `;
-    
-    $('#alertContainer').html(alertHtml);
-    
-    setTimeout(function() {
-        $('.alert').fadeOut('slow', function() {
-            $(this).remove();
-        });
-    }, 3000);
+    `);
+    setTimeout(() => $('.alert').fadeOut('slow', function() { $(this).remove(); }), 3000);
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
 }
 
 $(document).ready(function () {
     
-    // CSRF Setup
     var csrfName = '<?= csrf_token() ?>' ? 'csrf_test_name' : 'csrf_test_name';
-    var csrfToken = $('input[name="' + csrfName + '"]').val();
-    
-    if (!csrfToken) {
-        csrfToken = $('meta[name="csrf-token"]').attr('content');
-    }
+    var csrfToken = $('input[name="' + csrfName + '"]').val() || $('meta[name="csrf-token"]').attr('content');
 
     // =============================================
-    // DATATABLE INITIALIZATION
+    // DATATABLE - NO BUILT-IN SEARCH
     // =============================================
     var productTable = $('#productTable').DataTable({
         processing: true,
         serverSide: true,
+        searching: false, // ✅ Disable built-in search
         ajax: {
             url: baseUrl + 'product/fetchRecords',
             type: 'POST',
-            data: function(d) {
-                d[csrfName] = csrfToken;
-            },
-            dataSrc: function(response) {
-                return response.data || [];
-            },
+            data: function(d) { d[csrfName] = csrfToken; },
+            dataSrc: 'data',
             error: function(xhr) {
                 console.error('DataTable error:', xhr);
                 showAlert('error', 'Failed to load products');
             }
         },
         columns: [
-            { 
-                data: null,
-                render: function(data, type, row, meta) {
-                    return meta.row + 1;
-                },
-                className: 'text-muted small'
-            },
-            { 
-                data: 'id', 
-                visible: false 
-            },
+            { data: null, render: (d, t, r, meta) => meta.row + 1, className: 'text-muted small' },
+            { data: 'id', visible: false },
             {
                 data: 'category_id',
                 render: function(data) {
                     var categories = {
-                        1: { name: 'Beverages', icon: '🥤' },
-                        2: { name: 'Snacks', icon: '🍪' },
-                        3: { name: 'Canned Goods', icon: '🥫' },
-                        4: { name: 'Personal Care', icon: '🧴' },
-                        5: { name: 'Household Items', icon: '🏠' }
+                        1: '🥤 Beverages', 2: '🍪 Snacks', 3: '🥫 Canned Goods',
+                        4: '🧴 Personal Care', 5: '🏠 Household Items'
                     };
-                    var cat = categories[data] || { name: 'Unknown', icon: '📦' };
-                    return cat.icon + ' ' + cat.name;
+                    return categories[data] || '📦 Unknown';
                 },
                 className: 'small'
             },
-            { 
-                data: 'name',
-                render: function(data) {
-                    return '<span class="font-weight-medium">' + escapeHtml(data) + '</span>';
-                },
-                className: 'small'
-            },
-            { 
-                data: 'price',
-                render: function(data) {
-                    return '<span class="text-success">₱' + parseFloat(data).toFixed(2) + '</span>';
-                },
-                className: 'text-right small'
-            },
-            { 
+            { data: 'name', render: d => '<span class="font-weight-medium">' + escapeHtml(d) + '</span>', className: 'small' },
+            { data: 'price', render: d => '<span class="text-success">₱' + parseFloat(d).toFixed(2) + '</span>', className: 'text-right small' },
+            {
                 data: 'stock',
                 render: function(data) {
                     var stock = parseInt(data) || 0;
-                    var badgeClass = 'badge-success';
-                    if (stock === 0) badgeClass = 'badge-danger';
-                    else if (stock <= 5) badgeClass = 'badge-warning';
-                    else if (stock <= 10) badgeClass = 'badge-info';
-                    
-                    return '<span class="badge ' + badgeClass + '">' + stock + '</span>';
+                    var badge = stock === 0 ? 'danger' : (stock <= 5 ? 'warning' : (stock <= 10 ? 'info' : 'success'));
+                    return '<span class="badge badge-' + badge + '">' + stock + '</span>';
                 },
                 className: 'text-center small'
             },
             {
-                data: null,
-                orderable: false,
-                searchable: false,
-                render: function(data, type, row) {
-                    return `
-                        <div class="btn-group btn-group-sm" role="group">
-                            <button class="btn btn-outline-secondary edit-btn" data-id="${row.id}" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-outline-danger delete-btn" data-id="${row.id}" title="Delete">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    `;
-                },
+                data: null, orderable: false, searchable: false,
+                render: row => `
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary edit-btn" data-id="${row.id}" title="Edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger delete-btn" data-id="${row.id}" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                `,
                 className: 'text-center'
             }
         ],
-        responsive: true,
-        autoWidth: false,
-        pageLength: 10,
+        responsive: true, autoWidth: false, pageLength: 10,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         language: {
-            search: '<i class="fas fa-search"></i>',
-            searchPlaceholder: 'Search products...',
             lengthMenu: 'Show _MENU_',
-            info: 'Showing _START_ to _END_ of _TOTAL_ products',
-            infoEmpty: 'No products found',
-            emptyTable: '<div class="text-center py-4 text-muted"><i class="fas fa-box-open fa-2x mb-2"></i><br>No products available</div>'
+            info: 'Showing _START_ to _END_ of _TOTAL_',
+            infoEmpty: 'No products',
+            emptyTable: '<div class="text-center py-4 text-muted"><i class="fas fa-box-open fa-2x mb-2"></i><br>No products</div>'
         },
         drawCallback: function() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('#countDisplay').text(productTable.rows({ filter: 'applied' }).count());
         }
     });
 
-    // Escape HTML helper
-    function escapeHtml(text) {
-        if (!text) return '';
-        var div = document.createElement('div');
-        div.appendChild(document.createTextNode(text));
-        return div.innerHTML;
-    }
+    $('#countDisplay').text(productTable.rows().count());
+
+    // =============================================
+    // CUSTOM SEARCH (ISA LANG)
+    // =============================================
+    $('#searchProduct').on('keyup', function() {
+        productTable.search(this.value).draw();
+    });
 
     // =============================================
     // ADD PRODUCT
     // =============================================
     $('#addProductForm').on('submit', function(e) {
         e.preventDefault();
-        
-        var $form = $(this);
-        var $submitBtn = $form.find('button[type="submit"]');
-        var originalText = $submitBtn.html();
-        
-        $submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i> Saving...');
+        var $form = $(this), $btn = $form.find('button[type="submit"]'), original = $btn.html();
+        $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i>Saving...');
         
         $.ajax({
-            url: baseUrl + 'product/save',
-            method: 'POST',
-            data: $form.serialize(),
-            dataType: 'json',
-            success: function(response) {
-                if (response.status === 'success' || response.success) {
-                    $('#addProductModal').modal('hide');
-                    $form[0].reset();
-                    
-                    if (typeof toastr !== 'undefined') {
-                        showToast('success', 'Product added successfully');
-                    } else {
-                        showAlert('success', 'Product added successfully');
-                    }
-                    
+            url: baseUrl + 'product/save', method: 'POST', data: $form.serialize(), dataType: 'json',
+            success: function(r) {
+                if (r.status === 'success' || r.success) {
+                    $('#addProductModal').modal('hide'); $form[0].reset();
+                    showToast('success', 'Product added');
                     productTable.ajax.reload(null, false);
                 } else {
-                    var msg = response.message || 'Failed to add product';
-                    if (typeof toastr !== 'undefined') {
-                        showToast('error', msg);
-                    } else {
-                        showAlert('error', msg);
-                    }
+                    showToast('error', r.message || 'Failed to add');
                 }
             },
             error: function(xhr) {
-                var msg = 'An error occurred';
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    msg = xhr.responseJSON.message;
-                }
-                if (typeof toastr !== 'undefined') {
-                    showToast('error', msg);
-                } else {
-                    showAlert('error', msg);
-                }
+                var msg = (xhr.responseJSON && xhr.responseJSON.message) || 'An error occurred';
+                showToast('error', msg);
             },
-            complete: function() {
-                $submitBtn.prop('disabled', false).html(originalText);
-            }
+            complete: function() { $btn.prop('disabled', false).html(original); }
         });
     });
 
@@ -226,35 +141,20 @@ $(document).ready(function () {
     // EDIT PRODUCT - Load Data
     // =============================================
     $(document).on('click', '.edit-btn', function() {
-        var productId = $(this).data('id');
-        
+        var id = $(this).data('id');
         $.ajax({
-            url: baseUrl + 'product/edit/' + productId,
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                if (response.data) {
-                    $('#editCategoryId').val(response.data.category_id);
-                    $('#editName').val(response.data.name);
-                    $('#editPrice').val(response.data.price);
-                    $('#editStock').val(response.data.stock);
-                    $('#editId').val(response.data.id);
+            url: baseUrl + 'product/edit/' + id, method: 'GET', dataType: 'json',
+            success: function(r) {
+                if (r.data) {
+                    $('#editCategoryId').val(r.data.category_id);
+                    $('#editName').val(r.data.name);
+                    $('#editPrice').val(r.data.price);
+                    $('#editStock').val(r.data.stock);
+                    $('#editId').val(r.data.id);
                     $('#editProductModal').modal('show');
-                } else {
-                    if (typeof toastr !== 'undefined') {
-                        showToast('error', 'Failed to load product data');
-                    } else {
-                        showAlert('error', 'Failed to load product data');
-                    }
-                }
+                } else { showToast('error', 'Failed to load data'); }
             },
-            error: function() {
-                if (typeof toastr !== 'undefined') {
-                    showToast('error', 'Error loading product data');
-                } else {
-                    showAlert('error', 'Error loading product data');
-                }
-            }
+            error: function() { showToast('error', 'Error loading data'); }
         });
     });
 
@@ -263,48 +163,22 @@ $(document).ready(function () {
     // =============================================
     $('#editProductForm').on('submit', function(e) {
         e.preventDefault();
-        
-        var $form = $(this);
-        var $submitBtn = $form.find('button[type="submit"]');
-        var originalText = $submitBtn.html();
-        
-        $submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i> Updating...');
+        var $form = $(this), $btn = $form.find('button[type="submit"]'), original = $btn.html();
+        $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i>Updating...');
         
         $.ajax({
-            url: baseUrl + 'product/update',
-            method: 'POST',
-            data: $form.serialize(),
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
+            url: baseUrl + 'product/update', method: 'POST', data: $form.serialize(), dataType: 'json',
+            success: function(r) {
+                if (r.success) {
                     $('#editProductModal').modal('hide');
-                    
-                    if (typeof toastr !== 'undefined') {
-                        showToast('success', 'Product updated successfully');
-                    } else {
-                        showAlert('success', 'Product updated successfully');
-                    }
-                    
+                    showToast('success', 'Product updated');
                     productTable.ajax.reload(null, false);
                 } else {
-                    var msg = response.message || 'Failed to update product';
-                    if (typeof toastr !== 'undefined') {
-                        showToast('error', msg);
-                    } else {
-                        showAlert('error', msg);
-                    }
+                    showToast('error', r.message || 'Failed to update');
                 }
             },
-            error: function(xhr) {
-                if (typeof toastr !== 'undefined') {
-                    showToast('error', 'Error updating product');
-                } else {
-                    showAlert('error', 'Error updating product');
-                }
-            },
-            complete: function() {
-                $submitBtn.prop('disabled', false).html(originalText);
-            }
+            error: function() { showToast('error', 'Error updating'); },
+            complete: function() { $btn.prop('disabled', false).html(original); }
         });
     });
 
@@ -312,61 +186,33 @@ $(document).ready(function () {
     // DELETE PRODUCT
     // =============================================
     $(document).on('click', '.delete-btn', function() {
-        var productId = $(this).data('id');
+        var id = $(this).data('id');
+        if (!confirm('Delete this product?')) return;
         
-        if (!confirm('Are you sure you want to delete this product?')) {
-            return;
-        }
-        
-        var data = {
-            _method: 'DELETE'
-        };
+        var data = { _method: 'DELETE' };
         data[csrfName] = csrfToken;
         
         $.ajax({
-            url: baseUrl + 'product/delete/' + productId,
-            method: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    if (typeof toastr !== 'undefined') {
-                        showToast('success', 'Product deleted successfully');
-                    } else {
-                        showAlert('success', 'Product deleted successfully');
-                    }
-                    
-                    productTable.ajax.reload(null, false);
-                } else {
-                    var msg = response.message || 'Failed to delete product';
-                    if (typeof toastr !== 'undefined') {
-                        showToast('error', msg);
-                    } else {
-                        showAlert('error', msg);
-                    }
-                }
+            url: baseUrl + 'product/delete/' + id, method: 'POST', data: data, dataType: 'json',
+            success: function(r) {
+                if (r.success) { showToast('success', 'Product deleted'); productTable.ajax.reload(null, false); }
+                else { showToast('error', r.message || 'Failed to delete'); }
             },
-            error: function() {
-                if (typeof toastr !== 'undefined') {
-                    showToast('error', 'Error deleting product');
-                } else {
-                    showAlert('error', 'Error deleting product');
-                }
-            }
+            error: function() { showToast('error', 'Error deleting'); }
         });
     });
 
     // =============================================
-    // MODAL RESET ON CLOSE
+    // MODAL RESET
     // =============================================
     $('#addProductModal').on('hidden.bs.modal', function() {
         $('#addProductForm')[0].reset();
-        $('#addProductForm button[type="submit"]').prop('disabled', false).html('<i class="fas fa-save mr-1"></i> Save');
+        $('#addProductForm button[type="submit"]').prop('disabled', false).html('<i class="fas fa-save mr-1"></i>Save');
     });
     
     $('#editProductModal').on('hidden.bs.modal', function() {
         $('#editProductForm')[0].reset();
-        $('#editProductForm button[type="submit"]').prop('disabled', false).html('<i class="fas fa-save mr-1"></i> Update');
+        $('#editProductForm button[type="submit"]').prop('disabled', false).html('<i class="fas fa-save mr-1"></i>Update');
     });
 
 });

@@ -267,7 +267,6 @@ body.dark-mode .nav-sidebar .nav-link.active {
                 
                 <?php if(session()->get('role') === 'admin'): ?>
                 
-                
                 <li class="nav-header">
                     <span class="text-uppercase text-white-50 font-weight-bold px-3" 
                           style="font-size: 0.7rem; letter-spacing: 1px;">
