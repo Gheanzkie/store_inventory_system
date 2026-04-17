@@ -46,7 +46,7 @@
                             <i class="fas fa-calendar-alt"></i>
                         </span>
                         <div class="info-box-content">
-                            <span class="info-box-text text-muted">Sales This Month</span>
+                            <span class="info-box-text text-muted">Sales This Months</span>
                             <span class="info-box-number font-weight-bold">₱<?= number_format($monthSales ?? 0, 2) ?></span>
                         </div>
                     </div>
