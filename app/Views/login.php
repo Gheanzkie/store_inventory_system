@@ -324,7 +324,7 @@
         
         <div class="brand-section">
             <img src="<?= base_url('assets/img/store.jpg') ?>" alt="Hisona Store" class="brand-logo">
-            <h1 class="brand-name">Welcome back</h1>
+            <h1 class="brand-name">Welcome back!</h1>
             <p class="brand-subtitle">Sign in to your Hisona Store account</p>
         </div>
 
