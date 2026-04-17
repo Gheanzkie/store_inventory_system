@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2026 at 11:29 AM
+-- Generation Time: Apr 16, 2026 at 01:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -84,7 +84,108 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `category_id`, `name`, `price`, `stock`) VALUES
-(1, 1, 'Coke', 20.00, 8);
+(1, 1, 'Coke', 20.00, 32),
+(2, 2, 'Canton', 13.00, 51),
+(3, 1, 'Coke Sakto', 20.00, 46),
+(4, 1, 'Sprite Sakto', 20.00, 49),
+(5, 1, 'Royal Sakto', 20.00, 48),
+(6, 1, 'Zesto Orange', 12.00, 80),
+(7, 1, 'Zesto Apple', 12.00, 80),
+(8, 1, 'Mineral Water 500ml', 15.00, 99),
+(9, 1, 'Energen Vanilla', 25.00, 60),
+(10, 1, 'Energen Chocolate', 25.00, 60),
+(11, 1, 'Nestea Iced Tea', 20.00, 60),
+(12, 1, 'C2 Apple', 18.00, 60),
+(13, 1, 'C2 Lemon', 18.00, 59),
+(14, 1, 'Gatorade Blue', 35.00, 40),
+(15, 1, 'Milo Ready to Drink', 25.00, 50),
+(16, 1, 'Bear Brand Milk', 20.00, 70),
+(17, 1, 'Nescafe 3in1', 10.00, 120),
+(18, 1, 'Kopiko Brown Coffee', 10.00, 120),
+(19, 1, 'Great Taste White', 10.00, 120),
+(20, 1, 'Lipton Yellow Label', 8.00, 100),
+(21, 1, 'Tang Juice Powder', 6.00, 150),
+(22, 1, 'Mogu Mogu Drink', 30.00, 50),
+(23, 2, 'Lucky Me Pancit Canton Original', 15.00, 120),
+(24, 2, 'Lucky Me Pancit Canton Chili', 15.00, 120),
+(25, 2, 'Nissin Cup Noodles', 20.00, 79),
+(26, 2, 'Piattos Cheese', 20.00, 80),
+(27, 2, 'Nova Cheese', 18.00, 80),
+(28, 2, 'Chippy BBQ', 15.00, 100),
+(29, 2, 'V-Cut Spicy', 15.00, 99),
+(30, 2, 'Boy Bawang Garlic', 12.00, 120),
+(31, 2, 'Boy Bawang Adobo', 12.00, 120),
+(32, 2, 'Oishi Prawn Crackers', 10.00, 100),
+(33, 2, 'Skyflakes', 9.00, 120),
+(34, 2, 'Fita Crackers', 10.00, 120),
+(35, 2, 'Magic Flakes', 8.00, 119),
+(36, 2, 'Hansel Sandwich', 10.00, 99),
+(37, 2, 'Jack n Jill Roller Coaster', 12.00, 100),
+(38, 2, 'Cloud 9 Chocolate', 10.00, 100),
+(39, 2, 'Hany Milk Chocolate', 8.00, 100),
+(40, 2, 'M&M Small', 25.00, 59),
+(41, 2, 'Snickers Mini', 20.00, 60),
+(42, 2, 'Lays Chips Small', 35.00, 49),
+(43, 3, 'Mega Sardines', 22.00, 99),
+(44, 3, '555 Sardines', 21.00, 100),
+(45, 3, 'Ligo Sardines', 23.00, 100),
+(46, 3, 'Century Tuna Flakes', 35.00, 80),
+(47, 3, 'Century Tuna Hot & Spicy', 36.00, 80),
+(48, 3, 'Argentina Corned Beef', 45.00, 58),
+(49, 3, 'Purefoods Corned Beef', 48.00, 59),
+(50, 3, 'Swift Corned Beef', 40.00, 60),
+(51, 3, 'Argentina Beef Loaf', 40.00, 59),
+(52, 3, 'Holiday Corned Beef', 38.00, 60),
+(53, 3, 'Del Monte Corn', 25.00, 80),
+(54, 3, 'Del Monte Pineapple', 30.00, 80),
+(55, 3, 'Libbys Vienna Sausage', 55.00, 50),
+(56, 3, 'Youngs Town Sardines', 20.00, 100),
+(57, 3, 'Mega Tuna Chili', 30.00, 80),
+(58, 3, '555 Tuna Adobo', 28.00, 80),
+(59, 3, '555 Tuna Afritada', 28.00, 80),
+(60, 3, 'Century Tuna Light', 35.00, 80),
+(61, 3, 'Mega Corned Beef', 42.00, 60),
+(62, 3, 'Argentina Meat Loaf', 40.00, 60),
+(63, 4, 'Safeguard Soap', 45.00, 100),
+(64, 4, 'Dove Soap', 60.00, 79),
+(65, 4, 'Colgate Toothpaste', 55.00, 90),
+(66, 4, 'Closeup Toothpaste', 50.00, 90),
+(67, 4, 'Hapee Toothpaste', 35.00, 100),
+(68, 4, 'Sunsilk Shampoo', 65.00, 80),
+(69, 4, 'Palmolive Shampoo', 60.00, 80),
+(70, 4, 'Head & Shoulders', 120.00, 60),
+(71, 4, 'Rexona Deodorant', 75.00, 70),
+(72, 4, 'Nivea Deodorant', 90.00, 60),
+(73, 4, 'Alcohol 70%', 55.00, 100),
+(74, 4, 'Hand Sanitizer', 50.00, 100),
+(75, 4, 'Cotton Buds', 20.00, 120),
+(76, 4, 'Toothbrush Soft', 25.00, 120),
+(77, 4, 'Face Mask Pack', 30.00, 150),
+(78, 4, 'Johnson Baby Powder', 85.00, 60),
+(79, 4, 'Pantene Shampoo', 120.00, 60),
+(80, 4, 'Cream Silk Conditioner', 110.00, 60),
+(81, 4, 'Gillette Razor', 45.00, 80),
+(82, 4, 'Colgate Mouthwash', 95.00, 60),
+(83, 5, 'Dishwashing Liquid', 35.00, 100),
+(84, 5, 'Laundry Powder', 60.00, 80),
+(85, 5, 'Bleach', 40.00, 80),
+(86, 5, 'Trash Bags', 30.00, 120),
+(87, 5, 'Broom', 80.00, 50),
+(88, 5, 'Dustpan', 25.00, 60),
+(89, 5, 'Mop Stick', 120.00, 40),
+(90, 5, 'Floor Cleaner', 90.00, 60),
+(91, 5, 'Air Freshener', 75.00, 70),
+(92, 5, 'Insect Spray', 85.00, 70),
+(93, 5, 'Candle Small', 10.00, 200),
+(94, 5, 'Matchsticks', 5.00, 200),
+(95, 5, 'Sponge', 15.00, 120),
+(96, 5, 'Steel Wool', 10.00, 120),
+(97, 5, 'Plastic Container', 45.00, 80),
+(98, 5, 'Cloth Hanger', 20.00, 120),
+(99, 5, 'Laundry Basket', 150.00, 40),
+(100, 5, 'Bucket', 70.00, 60),
+(101, 5, 'Water Dipper', 25.00, 80),
+(102, 5, 'Rubber Gloves', 35.00, 100);
 
 -- --------------------------------------------------------
 
@@ -96,15 +197,13 @@ CREATE TABLE `sales` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `total` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `date` datetime NOT NULL DEFAULT current_timestamp()
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(30) NOT NULL DEFAULT 'pending',
+  `payment_method` enum('cash','card','gcash','maya') DEFAULT 'cash',
+  `amount_received` decimal(10,2) DEFAULT 0.00,
+  `change_amount` decimal(10,2) DEFAULT 0.00,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sales`
---
-
-INSERT INTO `sales` (`id`, `user_id`, `total`, `date`) VALUES
-(2, 12, 40.00, '2026-04-08 15:31:13');
 
 -- --------------------------------------------------------
 
@@ -117,15 +216,9 @@ CREATE TABLE `sales_items` (
   `sale_id` int(11) UNSIGNED NOT NULL,
   `product_id` int(11) UNSIGNED NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 1,
-  `subtotal` decimal(10,2) NOT NULL DEFAULT 0.00
+  `subtotal` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sales_items`
---
-
-INSERT INTO `sales_items` (`id`, `sale_id`, `product_id`, `quantity`, `subtotal`) VALUES
-(4, 2, 1, 2, 40.00);
 
 -- --------------------------------------------------------
 
@@ -290,7 +383,37 @@ INSERT INTO `tbl_logs` (`LOGID`, `USERID`, `ACTION`, `DATELOG`, `TIMELOG`, `user
 (168, '12', 'New Sale created ID: 3', '2026-04-09', '00:36:58', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'ADD'),
 (169, '12', 'Sale deleted ID: 3', '2026-04-09', '00:37:09', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'DELETE'),
 (170, '12', 'Login: Arnelle', '2026-04-09', '13:21:15', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
-(171, '12', 'Login: Arnelle', '2026-04-09', '13:21:17', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN');
+(171, '12', 'Login: Arnelle', '2026-04-09', '13:21:17', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(172, '12', 'Login: Arnelle', '2026-04-11', '18:29:19', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(173, '12', 'Logout', '2026-04-11', '18:29:39', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGOUT'),
+(174, '12', 'Login: Arnelle', '2026-04-11', '18:29:44', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(175, '12', 'Product has been updated: Coke', '2026-04-11', '18:32:10', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(176, '12', 'New Product has been added: Canton', '2026-04-11', '18:44:34', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'ADD'),
+(177, '12', 'Product has been updated: Coke', '2026-04-11', '19:15:46', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(178, '12', 'Logout', '2026-04-11', '21:15:01', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGOUT'),
+(179, '12', 'Login: Arnelle', '2026-04-11', '21:15:23', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(180, '12', 'Product has been updated: Coke', '2026-04-11', '21:19:18', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(181, '12', 'Login: Arnelle', '2026-04-14', '11:21:30', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(182, NULL, 'Logout', '2026-04-14', '13:27:34', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', NULL, 'LOGOUT'),
+(183, '12', 'Login: Arnelle', '2026-04-14', '13:27:38', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(184, '12', 'Login: Arnelle', '2026-04-14', '21:02:55', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(185, '12', 'Login: Arnelle', '2026-04-14', '22:45:31', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(186, '12', 'Logout', '2026-04-15', '00:20:38', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGOUT'),
+(187, '12', 'Login: Arnelle', '2026-04-15', '21:16:57', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(188, '12', 'Product has been updated: Canton', '2026-04-15', '22:16:59', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(189, '12', 'Product has been updated: Canton', '2026-04-16', '00:13:05', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(190, '12', 'Product has been updated: Canton', '2026-04-16', '00:42:09', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(191, '12', 'Logout', '2026-04-16', '00:49:10', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGOUT'),
+(192, '12', 'Login: Arnelle', '2026-04-16', '00:49:14', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(193, '12', 'Logout', '2026-04-16', '01:12:14', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGOUT'),
+(194, '12', 'Login: Arnelle', '2026-04-16', '01:18:13', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(195, '12', 'New User has been apdated: Ghean', '2026-04-16', '01:49:29', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(196, '12', 'New User has been apdated: Ghean', '2026-04-16', '01:49:39', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'UPDATED'),
+(197, '12', 'Logout', '2026-04-16', '01:49:45', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGOUT'),
+(198, '13', 'Login: Ghean', '2026-04-16', '01:49:49', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Ghean', 'LOGIN'),
+(199, '13', 'Logout', '2026-04-16', '01:50:04', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Ghean', 'LOGOUT'),
+(200, '12', 'Login: Arnelle', '2026-04-16', '01:50:09', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGIN'),
+(201, '12', 'Logout', '2026-04-16', '01:51:11', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'Arnelle', 'LOGOUT');
 
 -- --------------------------------------------------------
 
@@ -317,7 +440,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `status`, `name`, `phone`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (12, 'ghean123', '$2y$10$WeuCOSyW.yRAnBwX1GRMwO2l7Z2RROMZxVDEpOT1f1M2Gge/TFJH6', 'admin', 'Active', 'Arnelle', '09278809655', '2026-02-20 02:35:30', '2026-04-04 07:07:58', '2026-04-03 22:54:58'),
-(13, 'ghean1234', '$2y$10$XsBGv9MKYJ3Y7grxBYpjTO1T8V3surDDANHIAuBObKkJ3zlim4.6u', 'admin', 'Active', 'Ghean', '09278809655', '2026-04-04 06:56:54', '2026-04-05 05:31:11', '2026-04-05 05:31:11');
+(13, 'ghean1234', '$2y$10$.KGYOupg/dtsOM3ku/.TIOVXUuuquBJI0OOGd..naImFboY5zUAsa', 'Staff', 'Active', 'Ghean', '09278809655', '2026-04-04 06:56:54', '2026-04-15 09:49:39', '2026-04-15 09:49:39');
 
 --
 -- Indexes for dumped tables
@@ -395,19 +518,19 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `sales_items`
 --
 ALTER TABLE `sales_items`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `staffs`
@@ -419,7 +542,7 @@ ALTER TABLE `staffs`
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `LOGID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `LOGID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
 -- AUTO_INCREMENT for table `users`
