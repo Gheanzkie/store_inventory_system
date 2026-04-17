@@ -59,7 +59,7 @@
                             <i class="fas fa-shopping-cart"></i>
                         </span>
                         <div class="info-box-content">
-                            <span class="info-box-text text-muted">Total Transactions</span>
+                            <span class="info-box-text text-muted">Total Transaction</span>
                             <span class="info-box-number font-weight-bold"><?= $totalTransactions ?? 0 ?></span>
                         </div>
                     </div>
