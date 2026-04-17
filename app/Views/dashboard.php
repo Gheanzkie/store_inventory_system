@@ -24,9 +24,9 @@
     <section class="content">
         <div class="container-fluid">
             
-            <!-- Summary Cards Row 1 -->
+            
             <div class="row">
-                <!-- Sales Today -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <!-- Sales This Month -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <!-- Total Transactions -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
 
-                <!-- Pending -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-warning" style="border-radius: 8px;">
@@ -79,9 +79,9 @@
                 </div>
             </div>
 
-            <!-- Summary Cards Row 2 -->
+            
             <div class="row">
-                <!-- Total Products -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <!-- Low Stock -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-danger" style="border-radius: 8px;">
@@ -107,7 +107,7 @@
                     </div>
                 </div>
 
-                <!-- Out of Stock -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-dark" style="border-radius: 8px;">
@@ -120,7 +120,7 @@
                     </div>
                 </div>
 
-                <!-- Total Staff -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -134,9 +134,9 @@
                 </div>
             </div>
 
-            <!-- Summary Cards Row 3 -->
+            
             <div class="row">
-                <!-- Average Sale -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -149,7 +149,7 @@
                     </div>
                 </div>
 
-                <!-- Items Sold Today -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <!-- Transactions Today -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -175,7 +175,7 @@
                     </div>
                 </div>
 
-                <!-- Total Sales All Time -->
+                
                 <div class="col-lg-3 col-6">
                     <div class="info-box shadow-sm border-0 bg-white">
                         <span class="info-box-icon bg-white text-secondary" style="border-radius: 8px;">
@@ -189,9 +189,9 @@
                 </div>
             </div>
 
-            <!-- Chart and Recent Transactions -->
+            
             <div class="row">
-                <!-- Sales Chart -->
+                
                 <div class="col-lg-8">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -208,7 +208,7 @@
                     </div>
                 </div>
 
-                <!-- Recent Transactions -->
+                
                 <div class="col-lg-4">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -268,9 +268,9 @@
                 </div>
             </div>
 
-            <!-- Top Products and Low Stock -->
+            
             <div class="row">
-                <!-- Top Selling Products -->
+                
                 <div class="col-lg-6">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -315,7 +315,7 @@
                     </div>
                 </div>
 
-                <!-- Low Stock Alert -->
+                
                 <div class="col-lg-6">
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-white border-0 pt-3">
@@ -375,7 +375,7 @@
     </section>
 </div>
 
-<!-- Chart.js -->
+
 <script src="<?= base_url('assets/plugins/chart.js/Chart.min.js') ?>"></script>
 <script>
 $(document).ready(function() {

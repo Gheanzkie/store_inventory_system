@@ -7,13 +7,13 @@
             <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
                     <h1 class="m-0 font-weight-normal text-secondary">
-                        <i class="fas fa-users mr-2"></i> Staff Accounts
+                        <i class="fas fa-users mr-2"></i> Accounts
                     </h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right bg-transparent">
                         <li class="breadcrumb-item"><a href="<?= base_url('dashboard') ?>" class="text-muted">Home</a></li>
-                        <li class="breadcrumb-item active text-secondary">Staff</li>
+                        <li class="breadcrumb-item active text-secondary">Accounts</li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
                                     <h3 class="card-title font-weight-normal text-secondary mb-0 mr-3">
-                                        <i class="fas fa-user-cog mr-2"></i> Staff List
+                                        <i class="fas fa-user-cog mr-2"></i>Account List
                                     </h3>
                                     <div class="btn-group btn-group-sm" role="group">
                                         <button type="button" class="btn btn-outline-secondary active" id="cardViewBtn">
@@ -44,13 +44,13 @@
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#addUserModal">
-                                    <i class="fas fa-plus mr-1"></i> Add Staff
+                                    <i class="fas fa-plus mr-1"></i> Add Account
                                 </button>
                             </div>
                         </div>
                         <div class="card-body pt-0">
                             
-                            <!-- Search Bar -->
+                            
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-sm">
@@ -77,17 +77,17 @@
                                 </div>
                             </div>
 
-                            <!-- Card View -->
+                            
                             <div id="cardViewContainer">
                                 <div class="row" id="userCards">
                                     <div class="col-12 text-center py-5 text-muted">
                                         <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
-                                        <p>Loading staff accounts...</p>
+                                        <p>Loading accounts...</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Table View (Hidden by default) -->
+                            
                             <div id="tableViewContainer" style="display: none;">
                                 <div class="table-responsive">
                                     <table id="userTable" class="table table-hover table-sm">
@@ -117,7 +117,7 @@
     </section>
 </div>
 
-<!-- Add User Modal -->
+
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0 shadow">
@@ -125,7 +125,7 @@
                 <?= csrf_field() ?>
                 <div class="modal-header border-0 pb-0">
                     <h5 class="modal-title font-weight-normal text-secondary">
-                        <i class="fas fa-user-plus mr-2"></i> Add Staff Account
+                        <i class="fas fa-user-plus mr-2"></i> Add Account
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
@@ -185,7 +185,7 @@
     </div>
 </div>
 
-<!-- Edit User Modal -->
+
 <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0 shadow">
@@ -255,7 +255,7 @@
     </div>
 </div>
 
-<!-- Toast Container -->
+
 <div class="toasts-top-right fixed" style="position: fixed; top: 1rem; right: 1rem; z-index: 9999;"></div>
 
 <?= $this->endSection() ?>
@@ -263,16 +263,16 @@
 <?= $this->section('scripts') ?>
 <script> const baseUrl = "<?= base_url() ?>"; </script>
 
-<!-- DataTables CSS -->
+
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
 
-<!-- DataTables JS -->
+
 <script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
 
-<!-- Custom Users JS -->
+
 <script src="<?= base_url('js/users/users.js') ?>"></script>
 
 <style>

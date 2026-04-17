@@ -19,9 +19,9 @@ class Sales extends BaseController
         $this->productModel = new ProductModel();
     }
 
-    // =============================================
-    // SALES HISTORY PAGE
-    // =============================================
+    
+    
+    
     public function index()
     {
         $data['allSales'] = $this->salesModel
@@ -31,9 +31,9 @@ class Sales extends BaseController
         return view('sales/index', $data);
     }
 
-    // =============================================
-    // DELETE SALE
-    // =============================================
+    
+    
+    
     public function delete()
     {
         $id = $this->request->getPost('id');
@@ -55,7 +55,7 @@ class Sales extends BaseController
         return redirect()->back()->with('msg', 'Sale deleted');
     }
 
-    // VIEW SINGLE SALE RECEIPT
+    
 public function view($id = null)
 {
     if (!$id) {

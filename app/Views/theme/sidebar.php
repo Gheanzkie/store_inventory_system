@@ -1,13 +1,13 @@
 <style>
-/* ================= SIDEBAR DESIGN - PROFESSIONAL THEME ================= */
 
-/* Main Sidebar Background */
+
+
 .main-sidebar {
     background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Brand Section */
+
 .brand-link {
     display: flex;
     align-items: center;
@@ -34,7 +34,7 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Navigation Links */
+
 .nav-sidebar .nav-link {
     position: relative;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -46,7 +46,7 @@
     overflow: hidden;
 }
 
-/* Active Indicator Bar */
+
 .nav-sidebar .nav-link::before {
     content: "";
     position: absolute;
@@ -67,7 +67,7 @@
     transform: scaleY(1);
 }
 
-/* Hover and Active States */
+
 .nav-sidebar .nav-link:hover,
 .nav-sidebar .nav-link.active {
     background: linear-gradient(90deg, rgba(255, 193, 7, 0.12) 0%, rgba(255, 193, 7, 0.02) 100%) !important;
@@ -76,12 +76,12 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Glow effect on hover */
+
 .nav-sidebar .nav-link:hover {
     box-shadow: 0 2px 12px rgba(255, 193, 7, 0.15);
 }
 
-/* Icon Styling */
+
 .nav-sidebar .nav-icon {
     margin-right: 12px;
     color: #ffc107 !important;
@@ -98,7 +98,7 @@
     color: #ffc107 !important;
 }
 
-/* Text Styling */
+
 .nav-sidebar .nav-link p {
     margin: 0;
     font-size: 14px;
@@ -108,7 +108,7 @@
     color: inherit;
 }
 
-/* Tree View (Submenu) */
+
 .nav-treeview {
     background: rgba(0, 0, 0, 0.15) !important;
     margin: 0 8px !important;
@@ -132,12 +132,12 @@
     margin-right: 8px;
 }
 
-/* Divider */
+
 .nav-sidebar .nav-item:not(:last-child) {
     margin-bottom: 2px;
 }
 
-/* Scrollbar Styling */
+
 .sidebar::-webkit-scrollbar {
     width: 6px;
 }
@@ -155,7 +155,7 @@
     background: rgba(255, 193, 7, 0.5);
 }
 
-/* Dark Mode Support */
+
 body.dark-mode .main-sidebar {
     background: linear-gradient(180deg, #0f141e 0%, #1a2332 100%) !important;
 }
@@ -174,7 +174,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
     color: #ffffff !important;
 }
 
-/* Mobile Responsive */
+
 @media (max-width: 768px) {
     .brand-text {
         font-size: 16px !important;
@@ -185,7 +185,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
     }
 }
 
-/* Animation for sidebar items */
+
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -215,7 +215,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4" id="mainSidebar">
 
-    <!-- Brand Logo -->
+    
     <div class="brand-link" id="brandLink">
         <img src="<?= base_url('assets/img/store.jpg') ?>" 
              alt="Hisona Store Logo"
@@ -223,12 +223,12 @@ body.dark-mode .nav-sidebar .nav-link.active {
         <span class="brand-text font-weight-bold">HISONA STORE</span>
     </div>
 
-    <!-- Sidebar Content -->
+    
     <div class="sidebar">
         <nav class="mt-3">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
 
-                <!-- Dashboard -->
+                
                 <li class="nav-item">
                     <a href="<?= base_url('dashboard') ?>" 
                        class="nav-link <?= is_active(1, 'dashboard') ?>">
@@ -237,7 +237,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
                     </a>
                 </li>
 
-                <!-- Point of Sale -->
+                
                 <li class="nav-item">
                     <a href="<?= base_url('sales_items') ?>" 
                        class="nav-link <?= is_active(1, 'sales_items') ?>">
@@ -246,7 +246,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
                     </a>
                 </li>
 
-                <!-- Transactions -->
+                
                 <li class="nav-item">
                     <a href="<?= base_url('sales') ?>" 
                        class="nav-link <?= is_active(1, 'sales') ?>">
@@ -255,7 +255,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
                     </a>
                 </li>
 
-                <!-- Products -->
+                
                 <li class="nav-item">
                     <a href="<?= base_url('product') ?>" 
                        class="nav-link <?= is_active(1, 'product') ?>">
@@ -264,10 +264,10 @@ body.dark-mode .nav-sidebar .nav-link.active {
                     </a>
                 </li>
 
-                <!-- Admin Only Section -->
+                
                 <?php if(session()->get('role') === 'admin'): ?>
                 
-                <!-- Divider -->
+                
                 <li class="nav-header">
                     <span class="text-uppercase text-white-50 font-weight-bold px-3" 
                           style="font-size: 0.7rem; letter-spacing: 1px;">
@@ -275,16 +275,16 @@ body.dark-mode .nav-sidebar .nav-link.active {
                     </span>
                 </li>
 
-                <!-- Staff Accounts -->
+                
                 <li class="nav-item">
                     <a href="<?= base_url('users') ?>" 
                        class="nav-link <?= is_active(1, 'users') ?>">
                         <i class="nav-icon fas fa-users-cog"></i>
-                        <p>Staff Accounts</p>
+                        <p>Accounts</p>
                     </a>
                 </li>
 
-                <!-- Activity Logs -->
+                
                 <li class="nav-item">
                     <a href="<?= base_url('log') ?>" 
                        class="nav-link <?= is_active(1, 'log') ?>">
@@ -294,7 +294,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
                 </li>
                 <?php endif; ?>
 
-                <!-- Divider -->
+                
                 <li class="nav-header mt-3">
                     <span class="text-uppercase text-white-50 font-weight-bold px-3" 
                           style="font-size: 0.7rem; letter-spacing: 1px;">
@@ -302,7 +302,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
                     </span>
                 </li>
 
-                <!-- Settings -->
+                
                 <li class="nav-item " style="text-align: center;">
                         <p class="text-white" style="opacity: 40%;">v1.2</p>
 
@@ -311,7 +311,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
             </ul>
         </nav>
         
-        <!-- Sidebar Footer -->
+        
         <div class="mt-auto p-3 text-center" style="position: absolute; bottom: 0; width: 100%;">
             <small class="text-white-50">
                 <i class="far fa-clock mr-1"></i> 
@@ -322,7 +322,7 @@ body.dark-mode .nav-sidebar .nav-link.active {
 </aside>
 
 <script>
-// Update time in sidebar footer
+
 function updateSidebarTime() {
     const now = new Date();
     const timeStr = now.toLocaleTimeString('en-US', { 
@@ -342,7 +342,7 @@ function updateSidebarTime() {
     }
 }
 
-// Update every second
+
 setInterval(updateSidebarTime, 1000);
 updateSidebarTime();
 </script>

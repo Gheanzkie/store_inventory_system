@@ -23,7 +23,7 @@
     <section class="content">
         <div class="container-fluid">
             
-            <!-- Alert Container -->
+            
             <div id="alertContainer"></div>
 
             <div class="row">
@@ -54,7 +54,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- DataTables will populate this -->
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -66,7 +66,7 @@
     </section>
 </div>
 
-<!-- Add Product Modal -->
+
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0 shadow">
@@ -124,7 +124,7 @@
     </div>
 </div>
 
-<!-- Edit Product Modal -->
+
 <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0 shadow">
@@ -184,7 +184,7 @@
     </div>
 </div>
 
-<!-- Toast Container -->
+
 <div class="toasts-top-right fixed" style="position: fixed; top: 1rem; right: 1rem; z-index: 9999;"></div>
 
 <?= $this->endSection() ?>
@@ -192,16 +192,16 @@
 <?= $this->section('scripts') ?>
 <script> const baseUrl = "<?= base_url() ?>"; </script>
 
-<!-- DataTables CSS -->
+
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
 
-<!-- DataTables JS -->
+
 <script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
 
-<!-- Custom Product JS -->
+
 <script src="<?= base_url('js/product/product.js') ?>"></script>
 
 <style>

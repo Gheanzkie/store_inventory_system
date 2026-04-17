@@ -6,234 +6,409 @@
     <title>Hisona Store | Sign In</title>
     <link rel="icon" href="<?= base_url('assets/img/store.jpg') ?>">
     
-    <!-- Fonts & CSS -->
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/adminlte/dist/css/adminlte.min.css') ?>">
     
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            font-family: 'Source Sans Pro', sans-serif;
             height: 100vh;
+            display: flex;
+            background: #ffffff;
+        }
+        
+        /* LEFT SIDE - LOGIN FORM */
+        .login-side {
+            width: 45%;
+            max-width: 520px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 40px;
+            background: #ffffff;
         }
         
-        .login-page {
-            background: transparent;
+        .login-container {
+            width: 100%;
+            max-width: 400px;
         }
         
-        .login-box {
-            width: 400px;
-        }
-        
-        .login-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-        
-        .login-card-body {
-            padding: 35px 30px;
+        .brand-section {
+            margin-bottom: 40px;
         }
         
         .brand-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .brand-logo img {
-            width: 70px;
-            height: 70px;
-            border-radius: 16px;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
             object-fit: cover;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
         }
         
         .brand-name {
-            font-size: 24px;
-            font-weight: 400;
-            color: #2d3748;
-            margin: 12px 0 5px;
-            letter-spacing: 2px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
         }
         
         .brand-subtitle {
-            font-size: 13px;
-            color: #a0aec0;
-            font-weight: 300;
-            margin-bottom: 25px;
-        }
-        
-        .input-group {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .input-group .form-control {
-            border: 1px solid #e2e8f0;
-            border-right: none;
-            padding: 12px 16px;
-            font-size: 14px;
-            background: #fafbfc;
-        }
-        
-        .input-group .form-control:focus {
-            border-color: #cbd5e0;
-            background: #ffffff;
-            box-shadow: none;
-        }
-        
-        .input-group-append .input-group-text {
-            background: #fafbfc;
-            border: 1px solid #e2e8f0;
-            border-left: none;
-            color: #a0aec0;
-            padding: 0 16px;
-        }
-        
-        .btn-signin {
-            background: #4a5568;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            color: white;
-            transition: all 0.2s ease;
-            width: 100%;
-        }
-        
-        .btn-signin:hover {
-            background: #2d3748;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(74, 85, 104, 0.2);
-        }
-        
-        .icheck-primary label {
-            color: #718096;
+            font-size: 15px;
+            color: #64748b;
             font-weight: 400;
-            font-size: 14px;
         }
         
         .alert {
-            border: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
             border-radius: 10px;
-            background: #fed7d7;
-            color: #9b2c2c;
-            font-size: 13px;
-            padding: 12px 16px;
+            color: #991b1b;
+            font-size: 14px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert i {
+            margin-right: 12px;
+            font-size: 16px;
+        }
+        
+        .form-group {
             margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+        
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+        
+        .input-wrapper:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .input-icon {
+            padding: 0 16px;
+            color: #94a3b8;
+            font-size: 16px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 15px 16px 15px 0;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            color: #1e293b;
+            outline: none;
+        }
+        
+        .input-field::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: #475569;
+        }
+        
+        .remember-me input {
+            margin-right: 10px;
+            accent-color: #3b82f6;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .forgot-link {
+            font-size: 14px;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .forgot-link:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        
+        .btn-signin {
+            width: 100%;
+            padding: 15px 20px;
+            background: #1e293b;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        
+        .btn-signin:hover {
+            background: #0f172a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 41, 59, 0.2);
+        }
+        
+        .btn-signin:active {
+            transform: translateY(0);
+            box-shadow: none;
         }
         
         .footer-note {
             text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #a0aec0;
+            font-size: 13px;
+            color: #94a3b8;
         }
         
         .footer-note a {
-            color: #718096;
+            color: #64748b;
             text-decoration: none;
+            font-weight: 500;
         }
         
         .footer-note a:hover {
-            color: #4a5568;
+            color: #1e293b;
+        }
+        
+        /* RIGHT SIDE - IMAGE/BACKGROUND */
+        .image-side {
+            flex: 1;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+        }
+        
+        .overlay-content {
+            position: absolute;
+            bottom: 60px;
+            left: 60px;
+            right: 60px;
+            color: white;
+            z-index: 10;
+        }
+        
+        .overlay-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .overlay-text {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 500px;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .store-badge {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+        
+        .store-badge i {
+            margin-right: 8px;
+            color: #fbbf24;
+        }
+        
+        /* Decorative elements */
+        .dot-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, #ffffff 2px, transparent 2px);
+            background-size: 30px 30px;
+            z-index: 5;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 900px) {
+            .image-side {
+                display: none;
+            }
+            
+            .login-side {
+                width: 100%;
+                max-width: 100%;
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-side {
+                padding: 20px;
+            }
+            
+            .brand-name {
+                font-size: 24px;
+            }
+            
+            .overlay-title {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
-<body class="hold-transition login-page">
+<body>
 
-<div class="login-box">
-    <div class="card login-card">
-        <div class="card-body login-card-body">
-            
-            <!-- Brand Logo & Title -->
-            <div class="brand-logo">
-                <img src="<?= base_url('assets/img/store.jpg') ?>" alt="Hisona Store Logo">
-                <h1 class="brand-name">HISONA STORE</h1>
-                <p class="brand-subtitle">Sign in to continue</p>
-            </div>
 
-            <!-- Error Message -->
-            <?php if (session()->getFlashdata('error')): ?>
-                <div class="alert">
-                    <i class="fas fa-exclamation-circle mr-2"></i>
-                    <?= session()->getFlashdata('error') ?>
-                </div>
-            <?php endif; ?>
-
-            <!-- Login Form -->
-            <form action="<?= base_url('/auth') ?>" method="post">
-                <?= csrf_field() ?>
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <i class="fas fa-lock"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row align-items-center mb-3">
-                    <div class="col-7">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">Remember me</label>
-                        </div>
-                    </div>
-                    <div class="col-5 text-right">
-                        <a href="#" class="text-muted small">Forgot?</a>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-signin">
-                    <i class="fas fa-sign-in-alt mr-2"></i> Sign In
-                </button>
-            </form>
-
-            <!-- Footer -->
-            <div class="footer-note">
-                &copy; <?= date('Y') ?> Hisona Store. All rights reserved.
-            </div>
-
+<div class="login-side">
+    <div class="login-container">
+        
+        
+        <div class="brand-section">
+            <img src="<?= base_url('assets/img/store.jpg') ?>" alt="Hisona Store" class="brand-logo">
+            <h1 class="brand-name">Welcome back</h1>
+            <p class="brand-subtitle">Sign in to your Hisona Store account</p>
         </div>
+
+      
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+        
+        <?php if (session()->getFlashdata('msg')): ?>
+            <div class="alert" style="background: #f0fdf4; border-color: #bbf7d0; color: #166534;">
+                <i class="fas fa-check-circle"></i>
+                <?= session()->getFlashdata('msg') ?>
+            </div>
+        <?php endif; ?>
+
+
+        <form action="<?= base_url('/auth') ?>" method="post">
+            <?= csrf_field() ?>
+
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <div class="input-wrapper">
+                    <span class="input-icon"><i class="fas fa-user"></i></span>
+                    <input type="text" name="username" class="input-field" placeholder="Enter your username" required autofocus>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                    <input type="password" name="password" class="input-field" placeholder="Enter your password" required>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember"> Remember me
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-signin">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+        </form>
+
+ 
+        <div class="footer-note">
+            &copy; <?= date('Y') ?> Hisona Store. <a href="#">Privacy Policy</a>
+        </div>
+
     </div>
 </div>
 
-<!-- Scripts -->
+
+<div class="image-side">
+  
+    <img style="opacity: 30%;" src="<?= base_url('assets/img/backround.jpg') ?>" alt="Store Background" onerror="this.style.display='none'">
+    
+   
+    <div class="dot-pattern"></div>
+    
+  
+    <div class="store-badge">
+        <i class="fas fa-store"></i> HISONA STORE
+    </div>
+    
+  
+    <div class="overlay-content">
+        <h2 class="overlay-title">Your One-Stop Shop</h2>
+        <p class="overlay-text">
+            Groceries, school supplies, and printing services — all in one convenient place. 
+            Serving the community since 2016.
+        </p>
+    </div>
+</div>
+
+
 <script src="<?= base_url('assets/adminlte/plugins/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-<script src="<?= base_url('assets/adminlte/dist/js/adminlte.min.js') ?>"></script>
-
-<script>
-    // Simple focus effect
-    $(document).ready(function() {
-        $('.form-control').on('focus', function() {
-            $(this).closest('.input-group').css('box-shadow', '0 0 0 3px rgba(74, 85, 104, 0.1)');
-        }).on('blur', function() {
-            $(this).closest('.input-group').css('box-shadow', 'none');
-        });
-    });
-</script>
 
 </body>
 </html>

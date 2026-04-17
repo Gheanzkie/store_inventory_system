@@ -19,9 +19,9 @@ class Sales_Items extends BaseController
         $this->salesModel     = new SalesModel();
     }
 
-    // =============================================
-    // POS CART PAGE
-    // =============================================
+    
+    
+    
     public function index()
     {
         $sale_id = $this->request->getGet('sale_id');
@@ -37,9 +37,9 @@ class Sales_Items extends BaseController
         return view('sales_items/index', $data);
     }
 
-    // =============================================
-    // CREATE NEW TRANSACTION
-    // =============================================
+    
+    
+    
     public function create()
     {
         $userId = session()->get('id') ?? 12;
@@ -57,9 +57,9 @@ class Sales_Items extends BaseController
             ->with('msg', 'New transaction started');
     }
 
-    // =============================================
-    // ADD ITEM TO CART
-    // =============================================
+    
+    
+    
     public function save()
     {
         $sale_id = $this->request->getPost('sale_id');
@@ -109,9 +109,9 @@ class Sales_Items extends BaseController
             ->with('msg', 'Item added');
     }
 
-    // =============================================
-    // UPDATE QUANTITY
-    // =============================================
+    
+    
+    
     public function update()
     {
         $id = $this->request->getPost('id');
@@ -145,9 +145,9 @@ class Sales_Items extends BaseController
         return redirect()->back()->with('msg', 'Quantity updated');
     }
 
-    // =============================================
-    // DELETE ITEM
-    // =============================================
+    
+    
+    
     public function delete()
     {
         $id = $this->request->getPost('id');
@@ -167,10 +167,10 @@ class Sales_Items extends BaseController
         return redirect()->back()->with('msg', 'Item removed');
     }
 
-    // =============================================
-    // CHECKOUT
-    // =============================================
- // CHECKOUT
+    
+    
+    
+ 
             public function checkout()
             {
                 $sale_id = $this->request->getPost('sale_id');
@@ -198,7 +198,7 @@ class Sales_Items extends BaseController
 
                 $change = $amount_received - $total;
 
-                // Update sale as completed
+                
                 $this->salesModel->update($sale_id, [
                     'total' => $total,
                     'status' => 'completed',
@@ -207,7 +207,7 @@ class Sales_Items extends BaseController
                     'change_amount' => $change
                 ]);
 
-                // Create new transaction for next customer
+                
                 $userId = session()->get('id') ?? 12;
                 $this->salesModel->insert([
                     'user_id' => $userId,
@@ -216,13 +216,13 @@ class Sales_Items extends BaseController
                     'status'  => 'pending'
                 ]);
 
-                // ✅ Redirect to receipt page
+                
                 return redirect()->to('/sales_items/receipt_page/' . $sale_id);
             }
 
-    // =============================================
-    // RECEIPT VIEW (For AJAX)
-    // =============================================
+    
+    
+    
         public function receipt($id = null)
         {
             if (!$id) {
@@ -251,9 +251,9 @@ class Sales_Items extends BaseController
             return view('sales_items/receipt_table', $data);
         }
 
-    // =============================================
-    // HELPER METHODS
-    // =============================================
+    
+    
+    
     private function getItems($sale_id)
     {
         $db = \Config\Database::connect();
@@ -277,7 +277,7 @@ class Sales_Items extends BaseController
         return $result->subtotal ?? 0;
     }
 
-    // RECEIPT PAGE (After Checkout)
+    
 public function receipt_page($id = null)
 {
     if (!$id) {

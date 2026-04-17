@@ -26,7 +26,7 @@ class Users extends Controller
         $phone = $this->request->getPost('phone');
 
         if (!$username || !$password) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'username and password are required']);
+            return $this->response->setJSON(['success' => false, 'message' => 'Username and password are required']);
         }
 
         $userModel = new \App\Models\UserModel();
@@ -35,7 +35,7 @@ class Users extends Controller
         // Check if username already exists
         $existingUser = $userModel->where('username', $username)->first();
         if ($existingUser) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'username is already in use']);
+            return $this->response->setJSON(['success' => false, 'message' => 'Username is already in use']);
         }
 
         $data = [
@@ -46,14 +46,14 @@ class Users extends Controller
             'status'     => $status,
             'phone'      => $phone,
             'updated_at' => date('Y-m-d H:i:s'),
-            'deleted_at' => date('Y-m-d H:i:s')
+            'deleted_at' => null // ← DAPAT NULL ITO, HINDI DATE
         ];
 
         if ($userModel->insert($data)) {
             $logModel->addLog('New User has been added: ' . $name, 'ADD');
-            return $this->response->setJSON(['status' => 'success']);
+            return $this->response->setJSON(['success' => true, 'message' => 'User added successfully']);
         } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to save user']);
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to save user']);
         }
     }
 
@@ -68,31 +68,30 @@ class Users extends Controller
         $status = $this->request->getPost('status');
         $phone = $this->request->getPost('phone');
 
-    // Validate the input
+        // Validate the input
         if (empty($username)) {
-            return $this->response->setJSON(['success' => false, 'message' => 'username is required']);
+            return $this->response->setJSON(['success' => false, 'message' => 'Username is required']);
         }
 
-    // Check if username already exists for another user
+        // Check if username already exists for another user
         $existingUser = $model->where('username', $username)
-        ->where('id !=', $userId)
-        ->first();
+                              ->where('id !=', $userId)
+                              ->first();
 
         if ($existingUser) {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'username is already in use by another user.'
+                'message' => 'Username is already in use by another user.'
             ]);
         }
 
         $userData = [
             'name'       => $name,
-            'username'      => $username,
+            'username'   => $username,
             'role'       => $role,
             'status'     => $status,
             'phone'      => $phone,
-            'updated_at' => date('Y-m-d H:i:s'),
-            'deleted_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s')
         ];
 
         if (!empty($password)) {
@@ -102,7 +101,7 @@ class Users extends Controller
         $updated = $model->update($userId, $userData);
 
         if ($updated) {
-            $logModel->addLog('New User has been apdated: ' . $name, 'UPDATED');
+            $logModel->addLog('User has been updated: ' . $name, 'UPDATED');
             return $this->response->setJSON([
                 'success' => true,
                 'message' => 'User updated successfully.'
@@ -117,58 +116,58 @@ class Users extends Controller
 
     public function edit($id){
         $model = new UserModel();
-    $user = $model->find($id); // Fetch user by ID
+        $user = $model->find($id);
 
-    if ($user) {
-        return $this->response->setJSON(['data' => $user]); // Return user data as JSON
-    } else {
-        return $this->response->setStatusCode(404)->setJSON(['error' => 'User not found']);
-    }
-}
-
-public function delete($id){
-    $model = new UserModel();
-    $logModel = new LogModel();
-    $user = $model->find($id);
-    if (!$user) {
-        return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
+        if ($user) {
+            return $this->response->setJSON(['success' => true, 'data' => $user]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'User not found']);
+        }
     }
 
-    $deleted = $model->delete($id);
+    public function delete($id){
+        $model = new UserModel();
+        $logModel = new LogModel();
+        $user = $model->find($id);
+        
+        if (!$user) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
+        }
 
-    if ($deleted) {
-        $logModel->addLog('Delete user', 'DELETED');
-        return $this->response->setJSON(['success' => true, 'message' => 'User deleted successfully.']);
-    } else {
-        return $this->response->setJSON(['success' => false, 'message' => 'Failed to delete user.']);
-    }
-}
+        $deleted = $model->delete($id);
 
-public function fetchRecords()
-{
-    $request = service('request');
-    $model = new \App\Models\UserModel();
-
-    $start = $request->getPost('start') ?? 0;
-    $length = $request->getPost('length') ?? 10;
-    $searchValue = $request->getPost('search')['value'] ?? '';
-
-    $totalRecords = $model->countAll();
-    $result = $model->getRecords($start, $length, $searchValue);
-
-    $data = [];
-    $counter = $start + 1;
-    foreach ($result['data'] as $row) {
-        $row['row_number'] = $counter++;
-        $data[] = $row;
+        if ($deleted) {
+            $logModel->addLog('User deleted: ' . $user['name'], 'DELETED');
+            return $this->response->setJSON(['success' => true, 'message' => 'User deleted successfully.']);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to delete user.']);
+        }
     }
 
-    return $this->response->setJSON([
-        'draw' => intval($request->getPost('draw')),
-        'recordsTotal' => $totalRecords,
-        'recordsFiltered' => $result['filtered'],
-        'data' => $data,
-    ]);
-}
+    public function fetchRecords()
+    {
+        $request = service('request');
+        $model = new \App\Models\UserModel();
 
+        $start = $request->getPost('start') ?? 0;
+        $length = $request->getPost('length') ?? 10;
+        $searchValue = $request->getPost('search')['value'] ?? '';
+
+        $totalRecords = $model->countAll();
+        $result = $model->getRecords($start, $length, $searchValue);
+
+        $data = [];
+        $counter = $start + 1;
+        foreach ($result['data'] as $row) {
+            $row['row_number'] = $counter++;
+            $data[] = $row;
+        }
+
+        return $this->response->setJSON([
+            'draw' => intval($request->getPost('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $result['filtered'],
+            'data' => $data,
+        ]);
+    }
 }

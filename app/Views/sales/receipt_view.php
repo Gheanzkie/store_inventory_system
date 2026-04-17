@@ -282,21 +282,21 @@
 <body>
     <div class="receipt-container">
         
-        <!-- Store Header -->
+        
         <div class="store-header">
             <h1 class="store-name">HISONA STORE</h1>
             <p class="store-address">Brgy. Tabugon, Kabankalan City</p>
             <p class="store-contact">Tel: 0912-345-6789</p>
         </div>
         
-        <!-- Receipt Badge -->
+        
         <div class="text-center">
             <span class="receipt-badge">
                 <i class="fas fa-receipt mr-1"></i> OFFICIAL RECEIPT
             </span>
         </div>
         
-        <!-- Receipt Details -->
+        
         <div class="receipt-info">
             <span class="receipt-label">Receipt No.:</span>
             <span class="receipt-value"><strong><?= str_pad($sale['id'], 8, '0', STR_PAD_LEFT) ?></strong></span>
@@ -319,7 +319,7 @@
         
         <div class="divider"></div>
         
-        <!-- Items Table -->
+        
         <table class="items-table">
             <thead>
                 <tr>
@@ -349,7 +349,7 @@
         
         <div class="divider"></div>
         
-        <!-- Payment Summary -->
+        
         <div class="payment-summary">
             <div class="payment-row">
                 <span class="payment-label">Amount Tendered:</span>
@@ -366,7 +366,7 @@
             <p class="thank-you-subtext">We appreciate your business. Have a wonderful day! 😊</p>
         </div>
         
-        <!-- Action Buttons -->
+        
         <div class="action-buttons no-print">
             <a href="<?= base_url('sales') ?>" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back

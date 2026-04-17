@@ -30,7 +30,7 @@
     <?php if (!empty($logs)): ?>
         <div class="timeline timeline-inverse">
             <?php foreach ($logs as $log): ?>
-                <!-- timeline item -->
+                
                 <div class="time-label">
                     <span class="bg-white">
                         <?= esc($log['DATELOG']) ?>

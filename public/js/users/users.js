@@ -216,10 +216,10 @@ $(document).ready(function() {
                 if (response.success) {
                     $('#addUserModal').modal('hide');
                     $form[0].reset();
-                    showToast('success', 'Staff account added');
+                    showToast('success', 'Account added');
                     loadAllUsers();
                 } else {
-                    showToast('error', response.message || 'Failed to add staff');
+                    showToast('error', response.message || 'Failed to add account');
                 }
             },
             error: function() {
@@ -286,7 +286,7 @@ $(document).ready(function() {
     // Delete User
     $(document).on('click', '.delete-btn', function() {
         var id = $(this).data('id');
-        if (!confirm('Delete this staff account?')) return;
+        if (!confirm('Delete this account?')) return;
         
         var data = { _method: 'DELETE' };
         data[csrfName] = csrfToken;
@@ -298,7 +298,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                    showToast('success', 'Staff account deleted');
+                    showToast('success', 'Account deleted');
                     loadAllUsers();
                 } else {
                     showToast('error', response.message || 'Failed to delete');
