@@ -7,7 +7,7 @@
 
             <?php if(session()->getFlashdata('msg')): ?>
             <div class="alert alert-info alert-dismissible fade show shadow-sm border-0" role="alert">
-                <i class="fas fa-info-circle mr-2"></i> <?= session()->getFlashdata('msg') ?>
+                <i class="fas fa-info-circle mr-2"></i> <?= esc(session()->getFlashdata('msg')) ?>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
             <?php endif; ?>
@@ -19,9 +19,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0 font-weight-bold">
                                     <i class="fas fa-cash-register mr-2"></i>Point of Sale
-                                    <span class="badge badge-light ml-2">#<?= str_pad($activeSale, 6, '0', STR_PAD_LEFT) ?></span>
+                                    <span class="badge badge-light ml-2">#<?= esc(str_pad((string)($activeSale ?? '0'), 6, '0', STR_PAD_LEFT)) ?></span>
                                 </h5>
-                                <a href="<?= base_url('sales') ?>" class="btn btn-outline-light btn-sm">
+                                <a href="<?= esc(base_url('sales')) ?>" class="btn btn-outline-light btn-sm">
                                     <i class="fas fa-history mr-1"></i>History
                                 </a>
                             </div>
@@ -30,31 +30,35 @@
                             
                             <!-- Category Filter -->
                             <div class="mb-3 d-flex flex-wrap gap-1">
-                                <a href="<?= base_url('sales_items?sale_id=' . $activeSale) ?>" 
+                                <a href="<?= esc(base_url('sales_items?sale_id=' . ($activeSale ?? ''))) ?>" 
                                    class="btn btn-sm <?= empty($selectedCategory) ? 'btn-secondary' : 'btn-outline-secondary' ?> mb-1">
                                     All
                                 </a>
+                                <?php if(!empty($categories) && is_array($categories)): ?>
                                 <?php foreach($categories as $cat): ?>
-                                <a href="<?= base_url('sales_items?sale_id=' . $activeSale . '&category=' . $cat['id']) ?>" 
-                                   class="btn btn-sm <?= $selectedCategory == $cat['id'] ? 'btn-secondary' : 'btn-outline-secondary' ?> mb-1">
-                                    <?= esc($cat['category_name']) ?>
+                                <a href="<?= esc(base_url('sales_items?sale_id=' . ($activeSale ?? '') . '&category=' . ($cat['id'] ?? ''))) ?>" 
+                                   class="btn btn-sm <?= (isset($selectedCategory) && $selectedCategory == ($cat['id'] ?? '')) ? 'btn-secondary' : 'btn-outline-secondary' ?> mb-1">
+                                    <?= esc($cat['category_name'] ?? '') ?>
                                 </a>
                                 <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Add Item Form -->
-                            <form method="post" action="<?= base_url('sales_items/save') ?>" class="bg-light p-3 rounded mb-3">
+                            <form method="post" action="<?= esc(base_url('sales_items/save')) ?>" class="bg-light p-3 rounded mb-3">
                                 <?= csrf_field() ?>
-                                <input type="hidden" name="sale_id" value="<?= $activeSale ?>">
+                                <input type="hidden" name="sale_id" value="<?= esc($activeSale ?? '') ?>">
                                 <div class="form-row">
                                     <div class="col-md-7 mb-2">
                                         <select name="product_id" class="form-control border-0 shadow-sm" required>
                                             <option value="">— Select Product —</option>
+                                            <?php if(!empty($products) && is_array($products)): ?>
                                             <?php foreach($products as $p): ?>
-                                            <option value="<?= $p['id'] ?>">
-                                                <?= esc($p['name']) ?> • ₱<?= number_format($p['price'],2) ?> (<?= $p['stock'] ?>)
+                                            <option value="<?= esc($p['id'] ?? '') ?>">
+                                                <?= esc($p['name'] ?? '') ?> • ₱<?= esc(number_format((float)($p['price'] ?? 0), 2)) ?> (<?= esc($p['stock'] ?? 0) ?>)
                                             </option>
                                             <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-2">
@@ -69,30 +73,30 @@
                             </form>
 
                             <!-- Cart Items -->
-                            <?php if(!empty($salesItems)): ?>
+                            <?php if(!empty($salesItems) && is_array($salesItems)): ?>
                             <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
                                 <table class="table table-sm table-hover">
                                     <thead class="bg-light small text-secondary">
-                                        <tr><th>Item</th><th class="text-right">Price</th><th class="text-center">Qty</th><th class="text-right">Amount</th><th></th></tr>
+                                        <table><th>Item</th><th class="text-right">Price</th><th class="text-center">Qty</th><th class="text-right">Amount</th><th></th></tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach($salesItems as $item): ?>
                                         <tr>
-                                            <td class="font-weight-medium"><?= esc($item['name']) ?></td>
-                                            <td class="text-right">₱<?= number_format($item['price'], 2) ?></td>
+                                            <td class="font-weight-medium"><?= esc($item['name'] ?? '') ?></td>
+                                            <td class="text-right">₱<?= esc(number_format((float)($item['price'] ?? 0), 2)) ?></td>
                                             <td class="text-center" style="width:80px">
-                                                <form method="post" action="<?= base_url('sales_items/update') ?>">
+                                                <form method="post" action="<?= esc(base_url('sales_items/update')) ?>">
                                                     <?= csrf_field() ?>
-                                                    <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                                    <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1" 
+                                                    <input type="hidden" name="id" value="<?= esc($item['id'] ?? '') ?>">
+                                                    <input type="number" name="quantity" value="<?= esc($item['quantity'] ?? 1) ?>" min="1" 
                                                            class="form-control form-control-sm text-center shadow-sm" onchange="this.form.submit()">
                                                 </form>
                                             </td>
-                                            <td class="text-right font-weight-bold text-success">₱<?= number_format($item['subtotal'], 2) ?></td>
+                                            <td class="text-right font-weight-bold text-success">₱<?= esc(number_format((float)($item['subtotal'] ?? 0), 2)) ?></td>
                                             <td class="text-center">
-                                                <form method="post" action="<?= base_url('sales_items/delete') ?>">
+                                                <form method="post" action="<?= esc(base_url('sales_items/delete')) ?>">
                                                     <?= csrf_field() ?>
-                                                    <input type="hidden" name="id" value="<?= $item['id'] ?>">
+                                                    <input type="hidden" name="id" value="<?= esc($item['id'] ?? '') ?>">
                                                     <button type="submit" class="btn btn-outline-danger btn-sm border-0" 
                                                             onclick="return confirm('Remove item?')">
                                                         <i class="fas fa-trash-alt"></i>
@@ -117,7 +121,7 @@
 
                 <!-- Payment Sidebar -->
                 <div class="col-lg-4">
-                    <?php if(!empty($salesItems)): ?>
+                    <?php if(!empty($salesItems) && is_array($salesItems)): ?>
                     <div class="card shadow-sm border-0">
                         <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%) !important;">
                             <h5 class="mb-0 font-weight-bold"><i class="fas fa-credit-card mr-2"></i>Payment</h5>
@@ -125,17 +129,18 @@
                         <div class="card-body p-4">
                             <div class="text-center mb-4">
                                 <span class="text-muted small text-uppercase">Total Amount Due</span>
-                                <h1 class="display-4 text-success font-weight-bold">₱<?= number_format($total, 2) ?></h1>
+                                <h1 class="display-4 text-success font-weight-bold">₱<?= esc(number_format((float)($total ?? 0), 2)) ?></h1>
                             </div>
                             
-                            <form method="post" action="<?= base_url('sales_items/checkout') ?>">
+                            <form method="post" action="<?= esc(base_url('sales_items/checkout')) ?>">
                                 <?= csrf_field() ?>
-                                <input type="hidden" name="sale_id" value="<?= $activeSale ?>">
+                                <input type="hidden" name="sale_id" value="<?= esc($activeSale ?? '') ?>">
                                 
                                 <div class="form-group">
                                     <label class="small font-weight-semibold text-secondary">Payment Method</label>
                                     <select name="payment_method" class="form-control border-0 shadow-sm">
-                                        <option value="cash">💵 Cash</option>
+                                        <option value="cash">Cash</option>
+                                        <option value="gcash">Gcash</option>
                                     </select>
                                 </div>
                                 
@@ -146,8 +151,8 @@
                                             <span class="input-group-text bg-white border-0">₱</span>
                                         </div>
                                         <input type="number" name="amount_received" id="amountReceived" 
-                                               class="form-control text-right border-0" value="<?= $total ?>" 
-                                               min="<?= $total ?>" step="0.01" required>
+                                               class="form-control text-right border-0" value="<?= esc($total ?? 0) ?>" 
+                                               min="<?= esc($total ?? 0) ?>" step="0.01" required>
                                     </div>
                                 </div>
                                 
@@ -163,8 +168,8 @@
                         </div>
                         <div class="card-footer bg-light border-0 py-3">
                             <div class="d-flex justify-content-between small text-muted">
-                                <span><i class="fas fa-receipt mr-1"></i> Items: <?= count($salesItems) ?></span>
-                                <span><i class="fas fa-cubes mr-1"></i> Qty: <?= array_sum(array_column($salesItems, 'quantity')) ?></span>
+                                <span><i class="fas fa-receipt mr-1"></i> Items: <?= esc(count($salesItems)) ?></span>
+                                <span><i class="fas fa-cubes mr-1"></i> Qty: <?= esc(array_sum(array_column($salesItems, 'quantity'))) ?></span>
                             </div>
                         </div>
                     </div>
@@ -185,14 +190,25 @@
     </section>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-var total = <?= $total ?? 0 ?>;
-$('#amountReceived').on('input', function() {
-    var change = (parseFloat($(this).val()) || 0) - total;
-    $('#changeAmount').html('₱' + (change >= 0 ? change.toFixed(2) : change.toFixed(2) + ' ⚠️'))
-        .toggleClass('text-success', change >= 0)
-        .toggleClass('text-danger', change < 0);
-}).trigger('input');
+$(document).ready(function() {
+    var total = parseFloat(<?= json_encode((float)($total ?? 0)) ?>) || 0;
+    
+    function updateChange() {
+        var amountReceived = parseFloat($('#amountReceived').val()) || 0;
+        var change = amountReceived - total;
+        
+        if (change >= 0) {
+            $('#changeAmount').html('₱' + change.toFixed(2)).removeClass('text-danger').addClass('text-success');
+        } else {
+            $('#changeAmount').html('₱' + change.toFixed(2) + ' ⚠️').removeClass('text-success').addClass('text-danger');
+        }
+    }
+    
+    $('#amountReceived').on('input', updateChange);
+    updateChange();
+});
 </script>
 
 <style>
@@ -201,7 +217,7 @@ $('#amountReceived').on('input', function() {
 .table td, .table th { vertical-align: middle; border: none; }
 .table tbody tr { border-bottom: 1px solid #f3f4f6; }
 .table tbody tr:last-child { border-bottom: none; }
-.gap-2 { gap: 0.5rem; }
+.gap-1 { gap: 0.25rem; }
 .opacity-50 { opacity: 0.5; }
 .btn-secondary { background: #6b7280; border-color: #6b7280; }
 .btn-secondary:hover { background: #4b5563; border-color: #4b5563; }

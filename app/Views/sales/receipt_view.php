@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receipt #<?= str_pad($sale['id'], 6, '0', STR_PAD_LEFT) ?> | HISONA STORE</title>
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/fontawesome/css/all.min.css') ?>">
+    <title>Receipt #<?= str_pad(htmlspecialchars((string)($sale['id'] ?? ''), ENT_QUOTES, 'UTF-8'), 6, '0', STR_PAD_LEFT) ?> | HISONA STORE</title>
+    <link rel="stylesheet" href="<?= htmlspecialchars(base_url('assets/css/bootstrap.min.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(base_url('assets/fontawesome/css/all.min.css'), ENT_QUOTES, 'UTF-8') ?>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -238,10 +238,13 @@
         }
         
         @media print {
-            body { background: #fff; padding: 0; }
-            .receipt-container { box-shadow: none; border-radius: 0; }
+            body { background: #fff; padding: 0; margin:0; }
+            .receipt-container { box-shadow: none; border-radius: 0; padding: 15px; max-width:100%; }
             .no-print, .action-buttons, .btn { display: none !important; }
         }
+        
+        /* utility */
+        .mr-1 { margin-right: 0.25rem; }
     </style>
 </head>
 <body>
@@ -264,19 +267,19 @@
     <!-- Receipt Details -->
     <div class="receipt-info">
         <span class="receipt-label">Receipt No.</span>
-        <span class="receipt-value"><strong><?= str_pad($sale['id'], 8, '0', STR_PAD_LEFT) ?></strong></span>
+        <span class="receipt-value"><strong><?= str_pad(htmlspecialchars((string)($sale['id'] ?? ''), ENT_QUOTES, 'UTF-8'), 8, '0', STR_PAD_LEFT) ?></strong></span>
     </div>
     <div class="receipt-info">
         <span class="receipt-label">Date</span>
-        <span class="receipt-value"><?= date('F d, Y', strtotime($sale['date'])) ?></span>
+        <span class="receipt-value"><?= htmlspecialchars(date('F d, Y', strtotime($sale['date'] ?? 'now')), ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="receipt-info">
         <span class="receipt-label">Time</span>
-        <span class="receipt-value"><?= date('h:i A', strtotime($sale['date'])) ?></span>
+        <span class="receipt-value"><?= htmlspecialchars(date('h:i A', strtotime($sale['date'] ?? 'now')), ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="receipt-info">
         <span class="receipt-label">Payment</span>
-        <span class="receipt-value"><?= ucfirst($sale['payment_method'] ?? 'Cash') ?></span>
+        <span class="receipt-value"><?= htmlspecialchars(ucfirst($sale['payment_method'] ?? 'Cash'), ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     
     <div class="divider"></div>
@@ -292,19 +295,25 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($items as $item): ?>
-            <tr>
-                <td><?= esc($item['name']) ?></td>
-                <td class="text-right">₱<?= number_format($item['price'], 2) ?></td>
-                <td class="text-center"><?= $item['quantity'] ?></td>
-                <td class="text-right">₱<?= number_format($item['subtotal'], 2) ?></td>
-            </tr>
-            <?php endforeach; ?>
+            <?php if (!empty($items) && is_array($items)): ?>
+                <?php foreach($items as $item): ?>
+                <tr>
+                    <td><?= htmlspecialchars($item['name'] ?? '—', ENT_QUOTES, 'UTF-8') ?></td>
+                    <td class="text-right">₱<?= htmlspecialchars(number_format((float)($item['price'] ?? 0), 2), ENT_QUOTES, 'UTF-8') ?></td>
+                    <td class="text-center"><?= htmlspecialchars((string)($item['quantity'] ?? 0), ENT_QUOTES, 'UTF-8') ?></td>
+                    <td class="text-right">₱<?= htmlspecialchars(number_format((float)($item['subtotal'] ?? 0), 2), ENT_QUOTES, 'UTF-8') ?></td>
+                </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4" class="text-center">— No items found —</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
         <tfoot>
             <tr class="total-row">
                 <td colspan="3" class="text-right"><strong>TOTAL</strong></td>
-                <td class="text-right"><strong>₱<?= number_format($total, 2) ?></strong></td>
+                <td class="text-right"><strong>₱<?= htmlspecialchars(number_format((float)($total ?? 0), 2), ENT_QUOTES, 'UTF-8') ?></strong></td>
             </tr>
         </tfoot>
     </table>
@@ -315,11 +324,11 @@
     <div class="payment-summary">
         <div class="payment-row">
             <span class="payment-label">Amount Tendered</span>
-            <span class="payment-value">₱<?= number_format($sale['amount_received'] ?? $total, 2) ?></span>
+            <span class="payment-value">₱<?= htmlspecialchars(number_format((float)($sale['amount_received'] ?? $total ?? 0), 2), ENT_QUOTES, 'UTF-8') ?></span>
         </div>
         <div class="payment-row">
             <span class="payment-label">Change Due</span>
-            <span class="change-value">₱<?= number_format($sale['change_amount'] ?? 0, 2) ?></span>
+            <span class="change-value">₱<?= htmlspecialchars(number_format((float)($sale['change_amount'] ?? 0), 2), ENT_QUOTES, 'UTF-8') ?></span>
         </div>
     </div>
     
@@ -331,13 +340,13 @@
     
     <!-- Action Buttons -->
     <div class="action-buttons no-print">
-        <a href="<?= base_url('sales') ?>" class="btn btn-secondary">
+        <a href="<?= htmlspecialchars(base_url('sales'), ENT_QUOTES, 'UTF-8') ?>" class="btn btn-secondary">
             <i class="fas fa-history"></i> History
         </a>
         <button class="btn btn-primary" onclick="window.print()">
             <i class="fas fa-print"></i> Print
         </button>
-        <a href="<?= base_url('sales_items/new') ?>" class="btn btn-success">
+        <a href="<?= htmlspecialchars(base_url('sales_items/new'), ENT_QUOTES, 'UTF-8') ?>" class="btn btn-success">
             <i class="fas fa-plus-circle"></i> New
         </a>
     </div>
