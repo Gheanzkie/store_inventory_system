@@ -37,13 +37,13 @@
   <?= $this->renderSection('content') ?>
 
  <footer class="main-footer no-print">
-    <strong>Copyright &copy; 2026 <a href="https://www.facebook.com/gheanarnelle.delacruz">Gheanz</a> </strong>
+    <strong>Copyright &copy; 2026 <a href="https://www.facebook.com/gheanarnelle.delacruz">hisona Store</a> </strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
     </div>
   </footer>
 <aside class="control-sidebar control-sidebar-dark">
-  <!-- Add padding so content isn’t stuck to edges -->
+
   <div class="p-3">
     <h5>Settings</h5>
     <hr>

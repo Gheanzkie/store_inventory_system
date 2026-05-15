@@ -363,13 +363,6 @@
                 </div>
             </div>
 
-            <div class="form-options">
-                <label class="remember-me">
-                    <input type="checkbox" name="remember"> Remember me
-                </label>
-                <a href="#" class="forgot-link">Forgot password?</a>
-            </div>
-
             <button type="submit" class="btn-signin">
                 <i class="fas fa-sign-in-alt"></i> Sign In
             </button>
